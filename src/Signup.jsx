@@ -5,7 +5,21 @@ import lockIcon from "./assets/lock.svg"
 
 
 export default function Signup() {
-  return (
+    const emailEntry = useRef();
+    const passwordEntry = useRef();
+    function trySignup(e) {
+        let email = emailEntry.current.value;
+        let password = passwordEntry.current.value;
+        console.log(email, password); 
+        if (localStorage.getItem('account')) {
+            console.log("You already have an account!");
+        } else {
+            localStorage.setItem('account', [email, password]);
+        }
+        
+
+    }
+    return (
 <main>
         <header>
             <h1>Create your</h1>
@@ -18,20 +32,20 @@ export default function Signup() {
                     <label for="email" class="inputLabel">Email</label>
                     <div class="inputGrid">
                         <img src={emailIcon} alt="email_icon" />
-                        <input id="emailInput" type="email" placeholder="name@email.com" />
+                        <input id="emailInput" ref={emailEntry} type="email" placeholder="name@email.com" />
                     </div>
                 </div>
                 <div class="authItem">
                     <label for="password" class="inputLabel">Password</label>
                     <div class="inputGrid">
                         <img src={lockIcon} alt="lock_icon" />
-                        <input id="passInput" type="password" placeholder="●●●●●●●●" />
+                        <input id="passInput" ref={passwordEntry} type="password" placeholder="●●●●●●●●" />
                     </div>
                 </div>
 
             </div>
             <div id="actionContainer">
-                <button id="actionButton">Next</button>
+                <button id="actionButton" onClick={trySignup}>Next</button>
             </div>
         </section>
     </main>
