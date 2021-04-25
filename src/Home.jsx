@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import './Home.css';
-
 export default function Home(match) {
     console.log(match);
   return (

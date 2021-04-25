@@ -4,15 +4,27 @@ import Navbar from "./Navbar.jsx"
 import Home from "./Home.jsx"
 import Signup from "./Signup.jsx"
 import Login from "./Login.jsx"
+import firebase from "firebase";
 // import Settings from "./Settings.jsx"
 import "./App.css";
 
 
 
 export default function App() {
-  let vibe = "yes";
+  const firebaseApp = firebase.apps[0];
 
-  authenticationCheck();
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (!user) {
+        console.error(
+          'User is not signed in!'
+        );
+      } else {
+        console.log("User is signed in??");
+      }
+    });
+  });
+
   return (
     <Router>
     <Navbar />
@@ -22,9 +34,7 @@ export default function App() {
       <Route path="/signup" component={Signup} />
     </Switch>
     </Router>
+
   );
 }
 
-function authenticationCheck() {
-  localStorage.getItem('account') ? console.log("User is logged in!") : console.log("User is NOT logged in!")
-}

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { Link } from 'react-router-dom'
 import emailIcon from "./assets/email.svg"
 import lockIcon from "./assets/lock.svg"
-
+import firebaseApp from "firebase";
 
 export default function Signup() {
     const emailEntry = useRef();
@@ -10,6 +10,19 @@ export default function Signup() {
     function trySignup(e) {
         let email = emailEntry.current.value;
         let password = passwordEntry.current.value;
+
+        firebaseApp.auth().createUserWithEmailAndPassword(email,password).then((userCredential) => {
+            // Signed in 
+            var user = userCredential.user;
+            console.log(`${user.email} has successfully signed up.`);
+            // ...
+          })
+          .catch((error) => {
+              console.error(error);
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ..
+          });
         console.log(email, password); 
         if (localStorage.getItem('account')) {
             console.log("You already have an account!");
