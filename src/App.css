@@ -34,6 +34,8 @@ nav {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    font-size: 2em;
+    font-weight: bold;
 }
 nav a {
     width: 100%;
