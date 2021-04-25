@@ -45,5 +45,3 @@ export default function Login() {
     </main>
   );
 }
-
-export default Login;
