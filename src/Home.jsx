@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import './Home.css';
+<<<<<<< HEAD
 import {DoseCardDisplay} from './assets/react_components/DoseCard.jsx';
+=======
+>>>>>>> f89abbd5bfed5727f13da51d59c74f1c2747fb7e
 export default function Home(match) {
     console.log(match);
   return (
