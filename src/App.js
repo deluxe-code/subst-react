@@ -10,9 +10,9 @@ import CreateSchedulePage from "./CreateSchedulePage.jsx"
 // import Settings from "./Settings.jsx"
 import "./App.css";
 
-
-function App() {
+export default function App() {
   let vibe = "yes";
+  authenticationCheck();
   return (
     <Router>
     <Navbar />
@@ -27,5 +27,6 @@ function App() {
     </Router>
   );
 }
-
-export default App;
+function authenticationCheck() {
+  localStorage.getItem('account') ? console.log("User is logged in!") : console.log("User is NOT logged in!")
+}

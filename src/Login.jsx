@@ -4,7 +4,7 @@ import lockIcon from "./assets/lock.svg"
 import "./Login.css"
 
 
-function Login() {
+export default function Login() {
   return (
     <main>
          <header>
