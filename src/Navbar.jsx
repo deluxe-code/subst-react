@@ -28,6 +28,9 @@ export default function Navbar() {
       <a href="#">Account</a>
       </Link>
       <div ref={authLabel}></div>
+      <Link to="/create_schedule">
+      <a href="#">Create Schedule</a>
+      </Link>
     </nav>
   );
 }
