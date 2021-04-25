@@ -14,9 +14,6 @@ export default function Navbar() {
       <Link to="/signup">
       <a href="#">Signup</a>
       </Link>
-      <Link to="/create_schedule">
-      <a href="#">Create Schedule</a>
-      </Link>
     </nav>
   );
 }

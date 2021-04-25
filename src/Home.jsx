@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import './Home.css';
-import {DoseCardDisplay} from './assets/react_components/DoseCard.jsx';
+
 export default function Home(match) {
     console.log(match);
   return (
@@ -9,8 +9,7 @@ export default function Home(match) {
         <div class="card">
             <span class="card-title">Today</span>
             <span class="card-subtitle">Today's doses</span>
-            <DoseCardDisplay></DoseCardDisplay>
-            <a href="add_dose"><button>Add Dose</button></a>
+            <a href="#bozungus"><button>Add Dose</button></a>
         </div>
 
         <div class="card">
