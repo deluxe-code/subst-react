@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
+import { Link, useHistory } from "react-router-dom"
 import emailIcon from "./assets/email.svg"
 import lockIcon from "./assets/lock.svg"
 import "./Login.css"
@@ -7,7 +8,7 @@ import firebaseApp from "firebase";
 export default function Login() {
     const emailEntry = useRef();
     const passwordEntry = useRef();
-
+    let history = useHistory();
     function tryLogin() {
         const email = emailEntry.current.value;
         const password = passwordEntry.current.value;
@@ -16,7 +17,7 @@ export default function Login() {
             // Signed in 
             var user = userCredential.user;
             console.log(`${user.email} has signed in successfully.`)
-            // ...
+            history.push('/')
           })
           .catch((error) => {
             console.error(error);
