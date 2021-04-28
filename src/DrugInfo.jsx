@@ -15,7 +15,7 @@ export default function DrugInfo(match) {
         <h1 id="drug-name">{drug.drugName}</h1>
         <div className="card">
             <h1>Description</h1>
-            <EditTextarea placeholder={drug.description==''?'Add a description' : drug.description} onSave={(evt)=>{Drugs.ChangeDescription(drugId, evt.value)}}/>
+            <EditTextarea className="edit-text-area"placeholder={drug.description==''?'Add a description' : drug.description} onSave={(evt)=>{Drugs.ChangeDescription(drugId, evt.value)}}/>
         </div>
         <section className="dose-cards-section">
             <div className="card">
