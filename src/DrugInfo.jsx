@@ -11,14 +11,12 @@ export default function DrugInfo(match) {
     let drug = Drugs.FindDrugWithID(drugId);
   return (
     <main id="drug-info-page">
-        <h1>Drug Name</h1>
         <h1 id="drug-name">{drug.drugName}</h1>
         <div className="card">
             <h1>Description</h1>
             <EditTextarea className="edit-text-area"placeholder={drug.description==''?'Add a description' : drug.description} onSave={(evt)=>{Drugs.ChangeDescription(drugId, evt.value)}}/>
         </div>
-        <section className="dose-cards-section">
-            <div className="card">
+        <div className="card">
                 <h1>Recent Doses</h1>
                 <DoseCardDisplay doses={Doses.GetDosesCategorizedByDrug().get(drugId)}></DoseCardDisplay>
             </div>
@@ -26,7 +24,6 @@ export default function DrugInfo(match) {
                 <h1>Missed Doses</h1>
                 <p></p>
             </div>
-        </section>
         <div className="card">
             <h1>Progress</h1>
             <p></p>

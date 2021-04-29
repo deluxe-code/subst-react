@@ -105,5 +105,9 @@ export class Schedules extends DatabaseStorage{
         let schedules = this.GetSchedules();
         return schedules.find(element => element.id==id);
     }
-    
+    static ChangeDescription(id, description) {
+        let schedule = Schedules.FindScheduleWithId(id);
+        schedule.description = description;
+        super.ChangeData('schedules', id, schedule);
+    }
 }

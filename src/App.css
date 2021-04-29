@@ -1,24 +1,24 @@
 html, body, #root {
     width: 100%;
-    height: 100%;
     margin: 0;
     padding: 0;
 }
 h1 {
     padding: 0px;
+    color: white;
 }
 main {
     /* Temporary color */
     background-color: inherit;
     width: 100%;
-    height: 100%;
+    min-height: 1000px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     padding-top: 40px;
     padding-bottom: 40px;
     box-sizing: border-box;
+    overflow: scroll;
 }
 body {
     background: rgb(21,21,21);
@@ -33,14 +33,18 @@ nav {
     line-height: 60px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
+    background-color: black;
+    position: fixed;
+    bottom: 0px;
 }
 nav a {
     width: 100%;
     color: rgba(255,255,255,.75);
     text-decoration: none;
     font-size: 0.8rem;
-    margin-right: 30px;
+    line-height: 25px;
+    
 }
 
 nav a:hover {
@@ -48,7 +52,7 @@ nav a:hover {
 }
 
 .card h1{
-    color: rgb(255, 94, 193);
+    color: white;
     font-size: 2em;
 }
 #drug-name {
@@ -58,19 +62,32 @@ nav a:hover {
 .dose-cards-section {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     width: 100%;
 }
 
 .search-select-option-container {
     display: flex;
-    background-color: black;
     flex-direction: column;
-    height: 150px;
-    overflow: scroll;
+    align-items: center;
 }
 .search-select-option {
-    color: black;
+    color: white;
     height: 40px;
+    width: 80%;
+    font-size: 15px;
+
+}
+.search-icon {
+    width: 75px;
+    position: relative;
+    bottom: 25px;
+}
+.search-select > input {
+    width: 60%;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 label {
     color: white;
@@ -79,6 +96,9 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 .closed {
     height: 0px;
@@ -91,15 +111,18 @@ form {
   }
   
 .dose-card-dropdown {
-    background-color: #007BFF;
+    background-color: rgb(21,21,21);
     transition: height 0.2s;
 }
-  .dose-card-body {
+.dose-card-body {
       height: 50px;
       display: flex;
       font-size: 8px;
-  }
-  .day-select.unchecked {
+      background-color: transparent!important;
+      width: 100%;
+}
+
+.day-select.unchecked {
     color: white;
 }
 
@@ -108,15 +131,24 @@ form {
 }
 
 .card {
-    background-color: rgb(46,45,51);
+    background-color: rgb(0,0,0);
+    box-shadow: 2px 2px 5px black;
     color: white;
     padding: 15px;
     box-sizing: border-box;
     border-radius: 15px;
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 25px;
+}
+
+.dose-card-dropdown > button {
+    background-color: rgb(136,112,174);
+}
+.dose-card-dropdown > a > button {
+    background-color: rgb(136,112,174);
 }
 
 .day-of-week-selector {
@@ -125,12 +157,18 @@ form {
     border-radius: 10px;
     box-shadow: black 2px 2px 2px;
 }
-
+.search-select {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: black;
+    border-radius: 20px;
+}
 .search-select-option.checked {
-    background-color: cornflowerblue;
+    background-color: black;
 }
 .search-select-option.unchecked {
-    background-color: white;
+    background-color: rgb(21,21,21);
 }
 #drug-info-page {
     width: 80%;
@@ -138,5 +176,14 @@ form {
     margin-right: auto;
 }
 .edit-text-area {
-    background-color: grey;
+    background-color: rgb(7, 7, 8);
+    width: 100%;
+    color: white;
+}
+.schedule-card {
+    background-color: rgb(21,21,21);
+    border-radius: 10px;
+}
+h2 {
+    color: white;
 }

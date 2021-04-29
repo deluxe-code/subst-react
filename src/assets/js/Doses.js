@@ -34,7 +34,12 @@ export class Doses extends DatabaseStorage{
     }
     static FormatDose(drugID, doseAmount, doseType, scheduleId, dateTimeTakenMilis, experience="") {
         console.log(this.GenerateNewId());
-        return super.FormatObject(this.GenerateNewId(),{drugID:drugID, doseAmount:doseAmount, doseType:doseType, scheduleId:scheduleId, dateTimeTakenMilis:dateTimeTakenMilis, experience:experience});
+        if(drugID<0||doseAmount<0||doseType<0) {
+            console.error("Failed to format dose. All necessary parameters must be positive.")
+        } else{
+            return super.FormatObject(this.GenerateNewId(),{drugID:drugID, doseAmount:doseAmount, doseType:doseType, scheduleId:scheduleId, dateTimeTakenMilis:dateTimeTakenMilis, experience:experience});
+        }
+        
     }
     static SetExperience(experience, id) {
         let replacement = this.GetElementWithId(id);
@@ -59,6 +64,17 @@ export class Doses extends DatabaseStorage{
             let currentDoseCategory = doseMap.get(dose.drugID) || [];
             currentDoseCategory.push(dose);
             doseMap.set(dose.drugID, currentDoseCategory);
+            currentDoseCategory.sort((a, b) => (a.dateTimeTakenMilis > b.dateTimeTakenMilis) ? 1 : -1);
+        });
+        return doseMap;
+    }
+    static GetDosesCategorizedBySchedule() {
+        let doses = this.GetDoses();
+        let doseMap = new Map();
+        doses.forEach(dose=>{
+            let currentDoseCategory = doseMap.get(dose.scheduleId) || [];
+            currentDoseCategory.push(dose);
+            doseMap.set(dose.scheduleId, currentDoseCategory);
             currentDoseCategory.sort((a, b) => (a.dateTimeTakenMilis > b.dateTimeTakenMilis) ? 1 : -1);
         });
         return doseMap;

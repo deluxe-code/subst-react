@@ -6,7 +6,7 @@ import {Drugs} from  '../js/Drugs.js';
 import {Schedules} from '../js/Schedules.js'
 import {Units} from '../js/Units.js'
 import {Doses} from '../js/Doses.js';
-import img from '../img/alarm-24px.svg';
+import img from '../img/schedule_white_24dp.svg';
 const e = React.createElement;
 export class DoseCardDisplay extends React.Component {
     state = {
@@ -41,12 +41,13 @@ class DoseCard extends React.Component {
     
     render() {
         //Drugs.FindDrugWithID(this.props.dose.drugID).drugName
-        this.state.takenTextColor = this.props.dose.dateTimeTakenMilis<0 ? "black" : "grey";
+        console.log(this.props.dose);
+        this.state.takenTextColor = this.props.dose.dateTimeTakenMilis<0 ? "white" : "grey";
         return <div className={"schedule-card"}>
             <button id="body" className="dose-card-body" onClick={this.onClick}>
                 <img id="icon" src={img} className="schedule-card-icon"></img>
                 <h1 id="drugName" className="schedule-card-title"> {Drugs.FindDrugWithID(this.props.dose.drugID).drugName}</h1>
-                <h1 id="timeDisplay" className="schedule-card-time" style={{color:this.state.takenTextColor}}> {this.props.dose.dateTimeTakenMilis<0 ? this.getFormatedTime(Schedules.FindScheduleWithId(this.props.dose.scheduleId).time) : "Took at - " + this.getFormatedTime(this.props.dose.dateTimeTakenMilis) + ""}</h1>
+                <h1 id="timeDisplay" className="schedule-card-time" style={{color:this.state.takenTextColor}}>&nbsp; -  {this.props.dose.dateTimeTakenMilis<0 ? this.getFormatedTime(Schedules.FindScheduleWithId(this.props.dose.scheduleId).time) : "Took at - " + this.getFormatedTime(this.props.dose.dateTimeTakenMilis) + ""}</h1>
             </button>
             <DoseCardDropdown className={this.state.isOpened?"dose-card-dropdown opened":"dose-card-dropdown closed"} dose={this.props.dose} refreshDisplay={this.props.refreshDisplay}></DoseCardDropdown>
         </div>
@@ -68,8 +69,10 @@ class DoseCardDropdown extends React.Component {
     }
     render() {
         let drugInfoLink = `drug_info/${this.props.dose.drugID}`;
+        let scheduleInfoLink = `schedule_info/${this.props.dose.scheduleId}`;
         if(!Doses.HasTaken(this.props.dose.id)) {
-            this.state.bodyChildren = <button id="schedule-card-take-button" onClick={()=>{Doses.SetTimer(new Date().getTime(), this.props.dose.id); this.props.refreshDisplay(Doses.GetTodaysDoses());}}>Take Dose</button>;
+            this.state.bodyChildren = [<button id="schedule-card-take-button" onClick={()=>{Doses.SetTimer(new Date().getTime(), this.props.dose.id); this.props.refreshDisplay(Doses.GetTodaysDoses());}}>Take Dose</button>,
+        <Link to={scheduleInfoLink}><button type="button">Schedule info</button></Link>];
         } else {
             this.state.bodyChildren = [<h1>You took {this.props.dose.doseAmount} {Units.GetElementWithId(this.props.dose.doseType).unitName}</h1>,
                                     <Link to={drugInfoLink}>

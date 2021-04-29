@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Link, useHistory } from 'react-router-dom'
+import searchIcon from './assets/img/search_white_24dp.svg'
 import firebase from 'firebase';
 
 export default function Navbar() {
@@ -24,13 +25,17 @@ export default function Navbar() {
       <Link to="/signup">
       <a href="#">Signup</a>
       </Link>
+      <Link to="/search">
+        <img src={searchIcon} className="search-icon"/>
+      </Link>
       <Link to="/account">
       <a href="#">Account</a>
       </Link>
-      <div ref={authLabel}></div>
       <Link to="/create_schedule">
       <a href="#">Create Schedule</a>
       </Link>
+      
+      <div ref={authLabel}></div>
     </nav>
   );
 }

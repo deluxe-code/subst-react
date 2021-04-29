@@ -20,7 +20,7 @@ main {
 }
 
 button /* Specify the type of button here? */ {
-    background-color: #007bff;
+    background-color: black;
     padding: 8px 13px 8px 13px;
     outline: none;
     border: none;

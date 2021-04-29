@@ -6,6 +6,12 @@ import Home from "./Home.jsx"
 import Signup from "./Signup.jsx"
 import Login from "./Login.jsx"
 import Account from "./Account.jsx"
+import DrugInfo from "./DrugInfo.jsx"
+import ScheduleInfo from "./ScheduleInfo.jsx"
+import AddDosePage from "./AddDosePage.jsx"
+import CreateSchedule from "./CreateSchedulePage.jsx"
+import Settings from "./Settings.jsx"
+
 
 // import Settings from "./Settings.jsx"
 import "./App.css";
@@ -16,6 +22,7 @@ export default function App() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function(user) {
+      console.log(user.uid);
       if (!user) {
         console.error(
           'User is not signed in!'
@@ -28,13 +35,18 @@ export default function App() {
 
   return (
     <Router>
-    <Navbar />
     <Switch>
       <Route path="/" exact component={Home} />
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       <Route path="/account" component={Account} />
+      <Route path="/drug_info/:id" component={DrugInfo} />
+      <Route path="/schedule_info/:id" component={ScheduleInfo} />
+      <Route path="/add_dose" component={AddDosePage} />
+      <Route path="/create_schedule" component={CreateSchedule} />
+      <Route path="/settings" component={Settings} />
     </Switch>
+    <Navbar />
     </Router>
 
   );
