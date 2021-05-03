@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Link, useHistory } from 'react-router-dom'
 import searchIcon from './assets/img/search_white_24dp.svg'
+import homeIcon from './assets/img/home_white_24dp.svg'
+import settingsIcon from './assets/img/settings_white_24dp.svg'
+import {AddButton} from './assets/react_components/AddButton.jsx'
 import firebase from 'firebase';
 
 export default function Navbar() {
@@ -13,29 +16,16 @@ export default function Navbar() {
         currentStatus.innerHTML = "Signed in";
       }
     });
-  
+  //<div ref={authLabel}></div>
   return (
     <nav>
       <Link to="/">
-      <a href="#">Home</a>
+        <img src={homeIcon} className="home-icon nav-icon"/>
       </Link>
-      <Link to="/login">
-      <a href="#">Login</a>
+      <AddButton></AddButton>
+      <Link to="/settings">
+        <img src={settingsIcon} className="settings-icon nav-icon"/>
       </Link>
-      <Link to="/signup">
-      <a href="#">Signup</a>
-      </Link>
-      <Link to="/search">
-        <img src={searchIcon} className="search-icon"/>
-      </Link>
-      <Link to="/account">
-      <a href="#">Account</a>
-      </Link>
-      <Link to="/create_schedule">
-      <a href="#">Create Schedule</a>
-      </Link>
-      
-      <div ref={authLabel}></div>
     </nav>
   );
 }
