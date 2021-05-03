@@ -7,6 +7,14 @@ h1 {
     padding: 0px;
     color: white;
 }
+#optionsBlock {
+    position: absolute;
+    bottom: 60px;
+    height: 150px;
+    width: 100%;
+    background-color: gray;
+    transition: 1s;
+}
 main {
     /* Temporary color */
     background-color: inherit;
@@ -27,14 +35,14 @@ body {
     align-items: center;
     font-family: Arial;
 }
-/* nav {
+ nav {
     width: 100%;
     height: 60px;
     line-height: 60px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: black;
+    background-color: darkgray;
     align-items: center;
     position: fixed;
     bottom: 0px;
@@ -46,8 +54,8 @@ nav a, .nav-item {
     font-size: 0.8rem;
     line-height: 25px;
     text-align: center;
-    
-} */
+    height: 70px;
+} 
 
 nav a:hover {
     color: white;

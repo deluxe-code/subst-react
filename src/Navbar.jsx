@@ -3,11 +3,11 @@ import { Link, useHistory, useLocation } from 'react-router-dom'
 import searchIcon from './assets/img/search_white_24dp.svg'
 import homeIcon from './assets/img/home_white_24dp.svg'
 import settingsIcon from './assets/img/settings_white_24dp.svg'
-import {AddButton} from './assets/react_components/AddButton.jsx'
+import AddButton from './assets/react_components/AddButton.jsx'
 import firebase from 'firebase';
 
 export default function Navbar() {
-  let [currentPage, setCurrentPage] = useState([]);
+  let [currentPage, setCurrentPage] = useState(0);
   
   useEffect(() => {
     console.log("Time to update currentPage");
@@ -36,45 +36,43 @@ export default function Navbar() {
   
   let authLabel = useRef();
     firebase.auth().onAuthStateChanged(function(user) {
-      let currentStatus = authLabel.current;
-      if (!user) {
-        currentStatus.innerHTML = "Not signed in";
-      } else {
-        currentStatus.innerHTML = "Signed in";
-      }
+      console.log("user is authorized? or became unauthorized")
     });
-  //<div ref={authLabel}></div>
   return (
-    <nav style={styles.nav}>
-      <Link style={styles.nav_link} onClick={setCurrentPage} to="/">
-      <span>Home</span>
-      </Link>
-      <Link style={styles.nav_link} to="/login">
-      <span>Login</span>
-      </Link>
-      <Link style={styles.nav_link} to="/signup">
-      <span>Signup</span>
-      </Link>
-      <Link style={styles.nav_link} to="/search">
-        <img src={searchIcon} className="search-icon"/>
-      </Link>
-      <Link style={styles.nav_link}to="/account">
-      <span>Account</span>
-      </Link>
-      <Link style={styles.nav_link} to="/create_schedule">
-      <span>Create Schedule</span>
-      </Link>
+
+
+     <nav>
+     <Link to="/">
+       <img src={homeIcon} className="home-icon nav-icon"/>
+     </Link>
+    <AddButton></AddButton>
+    <Link to="/settings">
+    <img src={settingsIcon} className="settings-icon nav-icon"/>
+    </Link>
+    </nav>
+
+
+    // <nav style={styles.nav}>
+    //   <Link style={styles.nav_link} onClick={setCurrentPage} to="/">
+    //   <span>Home</span>
+    //   </Link>
+    //   <Link style={styles.nav_link} to="/login">
+    //   <span>Login</span>
+    //   </Link>
+    //   <Link style={styles.nav_link} to="/signup">
+    //   <span>Signup</span>
+    //   </Link>
+    //   <Link style={styles.nav_link} to="/search">
+    //     <img src={searchIcon} className="search-icon"/>
+    //   </Link>
+    //   <Link style={styles.nav_link}to="/account">
+    //   <span>Account</span>
+    //   </Link>
+    //   <Link style={styles.nav_link} to="/create_schedule">
+    //   <span>Create Schedule</span>
+    //   </Link>
       
-      <div ref={authLabel}></div>
-      </nav>
-    // <nav>
-    //   <Link to="/">
-    //     <img src={homeIcon} className="home-icon nav-icon"/>
-    //   </Link>
-    //   <AddButton></AddButton>
-    //   <Link to="/settings">
-    //     <img src={settingsIcon} className="settings-icon nav-icon"/>
-    //   </Link>
-    // </nav>
+    //   <div ref={authLabel}></div>
+    //   </nav>
   );
 }
