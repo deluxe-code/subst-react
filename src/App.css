@@ -27,32 +27,34 @@ body {
     align-items: center;
     font-family: Arial;
 }
-nav {
+/* #optionsBlock {
+    overflow: hidden;
+    height: 100px;
     width: 100%;
-    height: 60px;
-    line-height: 60px;
+    bottom: 70px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    position: absolute;
     background-color: black;
-    align-items: center;
-    position: fixed;
-    bottom: 0px;
+    animation: revealAddMenu .35s;
+} */
+/* #optionsBlock .menuOption {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1rem;
+} */
+/* #optionsBlock .menuOption img {
+    height: 30px;
+} */
+#optionsBlock .menuOption:hover { 
+    background-color: darkgrey;
+    color: black;
 }
-nav a, .nav-item {
-    width: 100%;
-    color: rgba(255,255,255,.75);
-    text-decoration: none;
-    font-size: 0.8rem;
-    line-height: 25px;
-    text-align: center;
-    
+@keyframes revealAddMenu {
+    from {height: 0px; opacity: 0}
+    to {height: 100px; opacity: 1}
 }
-
-nav a:hover {
-    color: white;
-}
-
 .card h1{
     color: white;
     font-size: 2em;
@@ -80,7 +82,7 @@ nav a:hover {
     width: 100%;
     margin-bottom: 2px;
     font-size: 15px;
-
+    
 }
 .search-icon {
     width: 75px;
@@ -111,24 +113,24 @@ form {
 .dose-card-dropdown.closed {
     height: 0px;
     overflow: hidden;
-  }
-  
+}
+
 .dose-card-dropdown.opened {
     height: 250px;
     overflow: auto;
 }
-  
+
 
 .dose-card-dropdown {
     background-color: rgb(38, 38, 39);
     transition: height 0.2s;
 }
 .dose-card-body {
-      height: 50px;
-      display: flex;
-      font-size: 8px;
-      background-color: transparent!important;
-      width: 100%;
+    height: 50px;
+    display: flex;
+    font-size: 8px;
+    background-color: transparent!important;
+    width: 100%;
 }
 
 .day-select.unchecked {
@@ -220,7 +222,7 @@ h2 {
     margin: 0px;
 }
 .button-orb.closed {
-
+    
 }
 
 .button-orb.opened {

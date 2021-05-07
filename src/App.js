@@ -18,7 +18,6 @@ window.navigator.vibrate(200);
 
 
 export default function App() {
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function(user) {
       console.log(user.uid);
@@ -31,7 +30,7 @@ export default function App() {
       }
     });
   });
-
+ 
   return (
     <Router>
     <Switch>
@@ -46,7 +45,7 @@ export default function App() {
       <Route path="/settings" component={Settings} />
       <Route path="/statistics_page" component={StatisticsPage} />
     </Switch>
-    <Navbar />
+    <Navbar/>
     </Router>
 
   );
