@@ -1,52 +1,77 @@
+
 import { Component } from 'react';
 import {Drugs} from './Drugs.js'
 import {Units} from './Units.js'
 import React, { useState, useRef, useEffect } from "react"
 
-export class SearchSelect extends Component{
-    state = {
-        hasAddButton: false,
-        list:[],
-        inputValue:'',
-        selectedId: -1
+export default function FunctionalSearchSelect(props) {
+    const [inputValue, setInputValue] = useState("");
+    const [selectedId, setSelectedId] = useState(0);
+    const [opened, setOpened] = useState(0);
+    const [selectedOption, setSelectedOption] = useState(0);
+    const [addButton, setAddButton] = useState(props.hasAddButton ? <button onClick={()=>{props.addClickFunction(inputValue)}}></button> : <div></div>);
+    console.log(inputValue);
+    let changeSelected = (option)=> {
+        setSelectedId(option.optionId); 
+        setSelectedOption(option);
+        props.onChange(option);
     }
-    constructor(props) {
-        super(props);
-        this.state.hasAddButton = this.props.hasAddButton || false;
-        this.state.list = this.props.list || [];
-        this.state.addButton = this.state.hasAddButton ? <button onClick={()=>{this.props.addClickFunction(this.state.inputValue)}}></button> : <div></div>
+    let optionNameIncludes = (option)=> {
+        let title = option.title || "";
+        console.log(inputValue);
+        return title.toLowerCase().includes(inputValue.toLowerCase())
     }
-    render() {
-        return <div className="search-select">
-            <input type="text" onInput={(evt)=>{this.onInput(evt.target.value)}}></input>
-            <div id="options" className="search-select-option-container">
-               {
-                   this.state.list.filter(option=>option.title.toLowerCase().includes(this.state.inputValue.toLowerCase())).map(option => <button className={this.state.selectedId==option.optionId ? "search-select-option checked" : "search-select-option unchecked"} type="button" onClick={()=>{this.setState({selectedId:option.optionId})}}>{option.title}</button>)
-               }
-            </div>
-            {this.state.addButton}
-        </div>;
-    }
-    updateInputValue(evt) {
-        this.setState({
-          inputValue: evt.target.value
-        });
-      }
-    onInput(searchInput) {
-        let lowerCaseList = this.state.list.map(value=>value.title.toLowerCase());
-        this.setState({inputValue:searchInput});
-        if(lowerCaseList.includes(searchInput.toLowerCase())||searchInput=="") {
-            this.setState({addButton: <button type="button" onClick={()=>{this.props.addClickFunction(this.state.inputValue)}}> Add {searchInput} to list</button>});
-        } else {
+    return(
+    <div className="search-select" onClick={()=>{window.navigator.vibrate(5)}} 
+ >
+        <TwoStepSearchInput type="text" 
+            onInput={(evt)=>{
+                console.log(evt.target.value);
+                let searchInput = evt.target.value;
+                let lowerCaseList = props.list.map(value=>value.title.toLowerCase());
+                setInputValue(searchInput);
+                if(lowerCaseList.includes(inputValue.toLowerCase())||inputValue=="") {
+                    setAddButton(<button type="button" onClick={()=>{props.addClickFunction(searchInput)}}> Add {searchInput} to list</button>);
+                } else {
 
-            this.setState({addButton:<button type="button" onClick={()=>{this.props.addClickFunction(this.state.inputValue)}}> Add {searchInput} to list</button>});
+                    setAddButton(<div></div>);
+            }}} 
+            onOpen={()=>{
+                setOpened(true)
+            }}
+            value={inputValue} 
+            placeholder={selectedOption==null?"Select Option":selectedOption.title}
+            title={selectedOption==null?"Select Option":selectedOption.title} 
+            setOpened={setOpened}
+            opened={opened}
+        ></TwoStepSearchInput>
+        <div id="options" className={"search-select-option-container " + (opened?"opened":"closed")} onClick={()=>{setOpened(false)}}>
+        {
+            props.list.filter(optionNameIncludes).map(option => <button className={selectedId==option.optionId ? "search-select-option checked" : "search-select-option unchecked"} type="button" onClick={()=>{changeSelected(option);}}>{option.title}</button>)
         }
-    }
-    GetSelectedId() {
-        return this.state.selectedId;
-    }
+        {addButton}
+        </div>
+    </div>)
 }
 
+function TwoStepSearchInput(props) {
+    const [opened, setOpened] = useState(props.opened);
+    const [title, setTitle] = useState(props.title);
+    const [currValue, setCurrValue] = useState(props.value);
+    useEffect(()=>{
+        setOpened(props.opened);
+        setTitle(props.title);
+        setCurrValue(props.value);
+        console.log(props.value)
+    });
+    let textBox = opened?
+    (<input {...props} value={currValue} ></input>):
+    (<button 
+        style={{backgroundColor:"white", color: "black", textAlign:"left"}} 
+        onClick={()=>{props.onOpen()}}
+    >{title}</button>);
+    return(textBox);
+}
 export class FormattedOption {
     optionId;
     title;
@@ -79,8 +104,7 @@ export class DrugSelect extends Component {
     }
 
     render() {
-        console.log(this.state.searchSelect)
-        return <SearchSelect hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Drugs.Store(Drugs.FormatDrug(inputValue))}}></SearchSelect>
+        return <FunctionalSearchSelect onChange={this.props.onChange} hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Drugs.Store(Drugs.FormatDrug(inputValue))}}></FunctionalSearchSelect>
     }
     GetSelectedId() {
         return this.state.searchSelect.current.GetSelectedId();
@@ -89,7 +113,7 @@ export class DrugSelect extends Component {
 }
 
 
-export class UnitSelect extends SearchSelect{
+export class UnitSelect extends Component{
     state = {
         list:[],
         searchSelect: React.createRef()
@@ -110,7 +134,8 @@ export class UnitSelect extends SearchSelect{
     }
 
     render() {
-        return <SearchSelect hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Units.Store(inputValue)}} selectedId></SearchSelect>
+        
+        return <FunctionalSearchSelect onChange={this.props.onChange} hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Units.Store(inputValue)}} selectedId></FunctionalSearchSelect>
     }
 
     GetSelectedId() {

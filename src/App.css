@@ -74,11 +74,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: height 0.2s;
+
 }
 .search-select-option {
     color: white;
-    height: 40px;
-    width: 80%;
+    width: 100%;
+    margin-bottom: 2px;
     font-size: 15px;
     
 }
@@ -86,6 +88,10 @@ body {
     width: 75px;
     position: relative;
     bottom: 25px;
+}
+input {
+    border-radius: 10px;
+    height: 30px;
 }
 .search-select > input {
     width: 60%;
@@ -245,30 +251,19 @@ h2 {
     
     padding-top: 20px;
 }
-/* nav {
-   position: fixed;
-   bottom: 0px;
-   width: 100%;
-   height: 70px;
-   display: flex;
-   justify-content: space-between;
-   background-color: black;
-} */
-/* nav a, .nav-item {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   width: 100%;
-   color: rgba(255,255,255,.75);
-   text-decoration: none;
-   font-size: 0.8rem;
-   text-align: center;
-   height: 70px;
-}  */
-/* nav a {
-   transition: .3s;
+
+.search-select-option-container.opened {
+    height: 150px;
+    overflow: scroll;
 }
-nav a:hover {
-   color: white;
-} */
+
+.search-select-option-container.closed {
+    height: 0px;
+    overflow: hidden;
+}
+.error {
+    color: red;
+}
+.search-select > input {
+    width: 100%;
+}

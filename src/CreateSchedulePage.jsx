@@ -17,6 +17,8 @@ let endDate = React.createRef();
 let time = React.createRef();
 let dayOfWeekSelect = React.createRef();
 export default function AddDosePage(match) {
+    let drugId = -1;
+    let unitId = -1;
     console.log(match); 
     var modifiers = {
         'weekend': function(weekday) {
@@ -29,13 +31,13 @@ export default function AddDosePage(match) {
     <main>
         <form className="d-flex flex-column align-items-center">
             <label>Drug Name</label>
-            <DrugSelect hasAddButton={true} ref={drugSelect} ></DrugSelect>;
+            <DrugSelect hasAddButton={true} ref={drugSelect} onChange={(option)=>{drugId=option.optionId}}></DrugSelect>;
             <label className="d-flex justify-content-center">Start Dose</label>
             <input className="form-control" type="number" id="start-dose" ref={startDose}></input>
             <label className="d-flex justify-content-center">End Dose</label>
             <input className="form-control" type="number" id="end-dose" ref={endDose}></input>
             <label id="units">Units</label>
-            <UnitSelect hasAddButton={true} ref={unitSelect}></UnitSelect>
+            <UnitSelect hasAddButton={true} ref={unitSelect} onChange={(option)=>{unitId=option.optionId}}></UnitSelect>
             <div className="d-flex flex-row justify-content-center" id="date-range">
                 <input type="date" className="form-control" id="start-date" ref={startDate}></input>
                 <input type="date" className="form-control" id="end-date" ref={endDate}></input>
@@ -46,11 +48,11 @@ export default function AddDosePage(match) {
         </form>
     </main>
   );
-}
-function submitSchedule() {
+  function submitSchedule() {
     //DayOfWeekSelect
     
-    Schedules.Store(Schedules.FormatSchedule(drugSelect.current.GetSelectedId(), startDose.current.value, endDose.current.value, unitSelect.current.GetSelectedId(), startDate.current.value, endDate.current.value, new Date(time.current.value).getTime(), dayOfWeekSelect.current.getChecked().map(day=>day.Value), -1));
+    Schedules.Store(Schedules.FormatSchedule(drugId, startDose.current.value, endDose.current.value, unitId, startDate.current.value, endDate.current.value, new Date(time.current.value).getTime(), dayOfWeekSelect.current.getChecked().map(day=>day.Value), -1));
+  }
 }
 
 export class DayOfWeekSelector extends React.Component {

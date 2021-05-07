@@ -36,6 +36,7 @@ class DoseCard extends React.Component {
     
       onClick() {
           this.setState({isOpened: !this.state.isOpened});
+          window.navigator.vibrate(10);
         //this.state.isOpened = !this.state.isOpened;
     }
     

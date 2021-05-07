@@ -8,43 +8,76 @@ import { Doses } from "./assets/js/Doses";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import MultiStepForm from "./MultiStepForm";
+import styled from 'styled-components';
+import { checkPropTypes } from "prop-types";
+import doseIcon from './assets/img/medication_white_24dp.svg';
+/*
 let drugSelect = React.createRef();
 let amount = React.createRef();
 let unitSelect = React.createRef();
 let time = React.createRef();
+*/
 export default function AddDosePage(match) {
     console.log(match);
+    let drugId = -1;
+    let amount = -1;
+    let unitId = -1;
+    let time = -1;
   return (
-    
-    <Swiper slidesPerView={1} pagination navigation>
-        <SwiperSlide>
-            <h2>Drug Name</h2>
-            <DrugSelect hasAddButton={true} ref={drugSelect}></DrugSelect>
-        </SwiperSlide>
-        <SwiperSlide>
-            <label className="d-flex justify-content-center">Amount</label>
-            <input className="form-control" type="number" id="dose-amount" ref={amount}></input>
-        </SwiperSlide>
-        <SwiperSlide>
-            <label id="units">Units</label>
-            <UnitSelect hasAddButton={true} ref={unitSelect}></UnitSelect>
-        </SwiperSlide>
-        <SwiperSlide>
-                <div className="d-flex flex-row justify-content-center" id="date-range">
-                    <div></div>
-                </div>
-        </SwiperSlide>
-        <SwiperSlide>
-                <label>Time</label>
-                <input type="datetime-local" className="form-control" id="time" ref={time}></input>
-                <button className="btn btn-primary" id="submit" type="button" onClick={submitDose}>Submit</button>
-        </SwiperSlide>
-        </Swiper>
+    <div>
+        <div style={{position: "fixed", display: "flex", flexDirection: "column", alignContent: "center"}}>
+            <h1 style={{paddingLeft: "50px", marginBottom:"0px"}}>Add</h1>
+            <h2 style={{paddingLeft: "50px"}}>Dose</h2>
+            <img src={doseIcon} height="400vw" style={{position:"absolute", top:"150px"}}/>
+        </div>
+        <MultiStepForm onSubmit={submitDose}>
+            <FormDrugSelect onChange={(value)=>{drugId = value}}></FormDrugSelect>
+            <FormUnitSelect onChange={(value)=>{unitId = value}}></FormUnitSelect>
+            <FormDoseAmount onChange={(value)=>{amount = value}}></FormDoseAmount>
+            <FormTimeSelect onChange={(value)=>{time = value}}></FormTimeSelect>
+        </MultiStepForm>
+    </div>
   );
-}
-function submitDose() {
-    console.log(amount.current.value);
+  function submitDose() {
     window.location.pathname = '/'
-    Doses.Store(Doses.FormatDose(drugSelect.current.GetSelectedId(), amount.current.value, unitSelect.current.GetSelectedId(), -1, new Date(time.current.value).getTime()));
+    Doses.Store(Doses.FormatDose(drugId, amount, unitId, -1, new Date(time).getTime()));
+  }
+}
+
+function FormDrugSelect(props) {
+    return (
+        <div>
+            <h2>Drug Name</h2>
+            <DrugSelect hasAddButton={true} onChange={(option)=>{props.onChange(option.optionId)}}></DrugSelect>
+        </div>
+    );
+}
+
+function FormUnitSelect(props) {
+    return (
+        <div>
+            <label id="units">Units</label>
+            <UnitSelect hasAddButton={true} onChange={(option)=>{props.onChange(option.optionId)}}></UnitSelect>
+        </div>
+    );
+}
+
+function FormDoseAmount(props) {
+    return (
+        <div>
+            <label className="d-flex justify-content-center">Amount</label>
+            <input className="form-control" type="number" id="dose-amount" onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
+        </div>
+    );
+}
+
+function FormTimeSelect(props) {
+    return(
+        <div>
+            <label>Time</label>
+            <input type="datetime-local" className="form-control" id="time" onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
+        </div>
+    );
 }
  
