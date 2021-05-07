@@ -12,10 +12,7 @@ import AddDosePage from "./AddDosePage.jsx"
 import CreateSchedule from "./CreateSchedulePage.jsx"
 import Settings from "./Settings.jsx"
 
-
-// import Settings from "./Settings.jsx"
 import "./App.css";
-
 
 
 export default function App() {

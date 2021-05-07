@@ -35,6 +35,10 @@ export default function AddButton() {
         flex-direction: column;
         justify-content: center;
         font-size: 1rem;
+        & :hover {
+            background-color: darkgrey;
+            color: black;
+        }
         & img {
             height: 30px;
         }
@@ -58,7 +62,12 @@ export default function AddButton() {
   }
   return (
     <>
-      {openStatus ? <AddMenu /> : null}
+      {
+          openStatus ? 
+          <AddMenu />
+           : 
+          null
+          }
       <div className="nav-item">
         {/* <button className={"add-button "+(this.state.opened?"opened" : "closed")} onBlur={()=>{this.setState({opened:false})}} onClick={()=>{this.setState({opened:!this.state.opened})}} >
                 <img src={addBoxIcon} className="add-box-icon nav-icon"/>

@@ -30,6 +30,7 @@ export const NavLink = styled(Link)`
     color: gray;
   }
 `;
+
 export default function Navbar() {
 
   let [isAuthorized, setAuthorized] = useState(false);
@@ -50,7 +51,7 @@ export default function Navbar() {
     }
   });
   return (
-    <Nav>
+    <Nav onClick={() => window.navigator.vibrate(100)}>
       <NavLink to="/">
         <img src={homeIcon} className="home-icon nav-icon" />
       </NavLink>

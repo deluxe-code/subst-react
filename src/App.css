@@ -47,10 +47,10 @@ body {
 /* #optionsBlock .menuOption img {
     height: 30px;
 } */
-#optionsBlock .menuOption:hover { 
+/* #optionsBlock .menuOption:hover { 
     background-color: darkgrey;
     color: black;
-}
+} */
 @keyframes revealAddMenu {
     from {height: 0px; opacity: 0}
     to {height: 100px; opacity: 1}
