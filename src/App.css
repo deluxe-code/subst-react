@@ -72,11 +72,13 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: height 0.2s;
+
 }
 .search-select-option {
     color: white;
-    height: 40px;
-    width: 80%;
+    width: 100%;
+    margin-bottom: 2px;
     font-size: 15px;
 
 }
@@ -84,6 +86,10 @@ nav a:hover {
     width: 75px;
     position: relative;
     bottom: 25px;
+}
+input {
+    border-radius: 10px;
+    height: 30px;
 }
 .search-select > input {
     width: 60%;
@@ -242,4 +248,20 @@ h2 {
     overflow: auto;
     
     padding-top: 20px;
+}
+
+.search-select-option-container.opened {
+    height: 150px;
+    overflow: scroll;
+}
+
+.search-select-option-container.closed {
+    height: 0px;
+    overflow: hidden;
+}
+.error {
+    color: red;
+}
+.search-select > input {
+    width: 100%;
 }

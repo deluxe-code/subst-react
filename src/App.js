@@ -11,10 +11,9 @@ import ScheduleInfo from "./ScheduleInfo.jsx"
 import AddDosePage from "./AddDosePage.jsx"
 import CreateSchedule from "./CreateSchedulePage.jsx"
 import Settings from "./Settings.jsx"
-
-
-// import Settings from "./Settings.jsx"
+import StatisticsPage from "./StatisticsPage.jsx"
 import "./App.css";
+window.navigator.vibrate(200); 
 
 
 
@@ -45,6 +44,7 @@ export default function App() {
       <Route path="/add_dose" component={AddDosePage} />
       <Route path="/create_schedule" component={CreateSchedule} />
       <Route path="/settings" component={Settings} />
+      <Route path="/statistics_page" component={StatisticsPage} />
     </Switch>
     <Navbar />
     </Router>
