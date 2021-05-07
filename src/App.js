@@ -19,7 +19,6 @@ import "./App.css";
 
 
 export default function App() {
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function(user) {
       console.log(user.uid);
@@ -32,7 +31,7 @@ export default function App() {
       }
     });
   });
-
+ 
   return (
     <Router>
     <Switch>
@@ -46,7 +45,7 @@ export default function App() {
       <Route path="/create_schedule" component={CreateSchedule} />
       <Route path="/settings" component={Settings} />
     </Switch>
-    <Navbar />
+    <Navbar/>
     </Router>
 
   );
