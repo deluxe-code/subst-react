@@ -7,7 +7,7 @@ import {Schedules} from '../js/Schedules.js'
 import {Units} from '../js/Units.js'
 import {Doses} from '../js/Doses.js';
 import img from '../img/schedule_white_24dp.svg';
-const e = React.createElement;
+import { EditText, EditTextarea } from 'react-edit-text';
 export class DoseCardDisplay extends React.Component {
     state = {
         doses: Doses.GetTodaysDoses()
@@ -19,7 +19,7 @@ export class DoseCardDisplay extends React.Component {
         }
     }
     render() {  
-      return <div>{this.state.doses.map(dose=><DoseCard key={dose.id} dose={dose} refreshDisplay={(p)=>{this.setState({doses:p})}}></DoseCard>)}</div>;
+      return <div className="dose-cards-section">{this.state.doses.map(dose=><DoseCard key={dose.id} dose={dose} refreshDisplay={(p)=>{this.setState({doses:p})}}></DoseCard>)}</div>;
 
     }
 }
@@ -42,7 +42,6 @@ class DoseCard extends React.Component {
     
     render() {
         //Drugs.FindDrugWithID(this.props.dose.drugID).drugName
-        console.log(this.props.dose);
         this.state.takenTextColor = this.props.dose.dateTimeTakenMilis<0 ? "white" : "grey";
         return <div className={"schedule-card"}>
             <button id="body" className="dose-card-body" onClick={this.onClick}>
@@ -72,20 +71,36 @@ class DoseCardDropdown extends React.Component {
         let drugInfoLink = `drug_info/${this.props.dose.drugID}`;
         let scheduleInfoLink = `schedule_info/${this.props.dose.scheduleId}`;
         if(!Doses.HasTaken(this.props.dose.id)) {
-            this.state.bodyChildren = [<button id="schedule-card-take-button" onClick={()=>{Doses.SetTimer(new Date().getTime(), this.props.dose.id); this.props.refreshDisplay(Doses.GetTodaysDoses());}}>Take Dose</button>,
-        <Link to={scheduleInfoLink}><button type="button">Schedule info</button></Link>];
+            this.state.currentBody = 
+            <div>
+                <button id="schedule-card-take-button" 
+                    onClick={()=>{
+                        Doses.SetTimer(new Date().getTime(), this.props.dose.id); this.props.refreshDisplay(Doses.GetTodaysDoses());
+                    }}
+                >Take Dose</button>
+                <Link to={scheduleInfoLink}><button type="button">Schedule info</button></Link>
+            </div>;
         } else {
-            this.state.bodyChildren = [<h1>You took {this.props.dose.doseAmount} {Units.GetElementWithId(this.props.dose.doseType).unitName}</h1>,
-                                    <Link to={drugInfoLink}>
-                                        <button type="button">Drug Info</button>
-                                    </Link>,
-                                    <h1>{this.state.time}</h1>,
-                                    <h2>"{this.props.dose.experience}" - User4389</h2>,
-                                    <input type="text" placeholder="Note your experience." ref={this.state.experienceRef} onChange={()=>{Doses.SetExperience(this.state.experienceRef.current.value, this.props.dose.id)}}></input>
-                                    ,<button onClick={()=>{Doses.RemoveDose(this.props.dose.id); this.setState({removed: true});this.props.refreshDisplay(Doses.GetTodaysDoses());}}>remove</button>];
+            this.state.currentBody = 
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <Link to={drugInfoLink}>
+                        <button type="button"><p className="highlighted">{Drugs.FindDrugWithID(this.props.dose.drugID).drugName}</p> Info</button>
+                    </Link>
+                    <div className="dose-card-section-card">
+                        <h1>You took <p className="highlighted">{this.props.dose.doseAmount}</p> {Units.GetElementWithId(this.props.dose.doseType).unitName}</h1>
+                    </div>
+                    <div className="dose-card-section-card">
+                        <h1>Time Elapsed: <p className="highlighted">{this.state.time}</p></h1>
+                    </div>
+                    <div className="dose-card-section-card">
+                        <EditTextarea className="edit-text-area" placeholder={this.props.dose.experience==''?'Add a description' : this.props.dose.experience} onSave={(evt)=>{Doses.SetExperience(evt.value, this.props.dose.id)}}/>
+                        <h2 style={{textAlign: "right"}}> - User4389</h2>
+                    </div>
+                    <button onClick={()=>{Doses.RemoveDose(this.props.dose.id); this.setState({removed: true});this.props.refreshDisplay(Doses.GetTodaysDoses());}}>remove</button>
+                </div>
         }
         return(
-            <div className={this.props.className}>{this.state.bodyChildren}</div>
+            <div className={this.props.className}>{this.state.currentBody}</div>
         );
     }
 

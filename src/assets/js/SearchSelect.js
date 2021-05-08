@@ -10,7 +10,6 @@ export default function FunctionalSearchSelect(props) {
     const [opened, setOpened] = useState(0);
     const [selectedOption, setSelectedOption] = useState(0);
     const [addButton, setAddButton] = useState(props.hasAddButton ? <button onClick={()=>{props.addClickFunction(inputValue)}}></button> : <div></div>);
-    console.log(inputValue);
     let changeSelected = (option)=> {
         setSelectedId(option.optionId); 
         setSelectedOption(option);
@@ -18,7 +17,6 @@ export default function FunctionalSearchSelect(props) {
     }
     let optionNameIncludes = (option)=> {
         let title = option.title || "";
-        console.log(inputValue);
         return title.toLowerCase().includes(inputValue.toLowerCase())
     }
     return(
@@ -26,7 +24,6 @@ export default function FunctionalSearchSelect(props) {
  >
         <TwoStepSearchInput type="text" 
             onInput={(evt)=>{
-                console.log(evt.target.value);
                 let searchInput = evt.target.value;
                 let lowerCaseList = props.list.map(value=>value.title.toLowerCase());
                 setInputValue(searchInput);
@@ -62,7 +59,6 @@ function TwoStepSearchInput(props) {
         setOpened(props.opened);
         setTitle(props.title);
         setCurrValue(props.value);
-        console.log(props.value)
     });
     let textBox = opened?
     (<input {...props} value={currValue} ></input>):

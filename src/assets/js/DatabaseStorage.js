@@ -50,6 +50,14 @@ export class DatabaseStorage {
         return data;
     }
 
+    static GetDataLocal(location) {
+
+    }
+
+    static GetDataCloud(location) {
+
+    }
+
     static ChangeData(location, id, replacement) {
         let data = this.GetData(location);
         data[this.FindIndexOfId(id, data)] = replacement;
@@ -64,6 +72,14 @@ export class DatabaseStorage {
 
     static ReplaceAll(location, arr) {
         localStorage.setItem(location, JSON.stringify(arr));
+    }
+
+    static ReplaceAllLocal(location, arr) {
+
+    }
+
+    static ReplaceAllCloud(location, arr) {
+        
     }
 
     static GenerateNewId(databaseName) {
