@@ -47,4 +47,4 @@ export class Drugs extends DatabaseStorage{
     }
 }
 
-const DefaultDrugs = [Drugs.FormatDrug("Marijuana", "Kills brain cells and makes you gay."),Drugs.FormatDrug("Cocaine"),Drugs.FormatDrug("Heroin"),Drugs.FormatDrug("Meth"),Drugs.FormatDrug("Adderall"), Drugs.FormatDrug("Nicotine"), Drugs.FormatDrug("Kratom")]
+const DefaultDrugs = [Drugs.FormatDrug("Marijuana"),Drugs.FormatDrug("Cocaine"),Drugs.FormatDrug("Heroin"),Drugs.FormatDrug("Meth"),Drugs.FormatDrug("Adderall"), Drugs.FormatDrug("Nicotine"), Drugs.FormatDrug("Kratom")]
