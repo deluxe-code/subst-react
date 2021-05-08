@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from 'react-router-dom'
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import './DrugInfo.css';
 import {DoseCardDisplay} from './assets/react_components/DoseCard.jsx';
 import { EditText, EditTextarea } from 'react-edit-text';

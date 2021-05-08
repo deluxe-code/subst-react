@@ -1,4 +1,4 @@
-import {DatabaseStorage}  from './DatabaseStorage.js';
+import {DatabaseStorage} from './DatabaseStorage.js';
 import {Doses}  from './Doses.js';
 export const IsToday = (someDate) => {
         

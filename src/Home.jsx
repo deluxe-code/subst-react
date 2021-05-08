@@ -8,7 +8,6 @@ import {DoseCardDisplay} from './assets/react_components/DoseCard.jsx';
 // import { AddOrb } from "./assets/react_components/AddOrb";
 export default function Home(match) {
   
-    console.log(match);
     let [userEmail, setEmail] = useState("");
     let [isAuthorized, setAuthorized] = useState(false);
     useEffect(

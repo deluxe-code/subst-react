@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Link, useHistory } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid';
 import emailIcon from "./assets/email.svg"
 import lockIcon from "./assets/lock.svg"
 import firebase from "firebase";
@@ -33,7 +34,8 @@ export default function Signup() {
     function initializeUser() {
         const db = firebase.firestore();
         db.collection("users").add({
-            email: firebase.auth().currentUser.email
+            email: firebase.auth().currentUser.email,
+            userID: uuidv4()
           })
     }
     return (
@@ -49,14 +51,14 @@ export default function Signup() {
                     <label for="email" class="inputLabel">Email</label>
                     <div class="inputGrid">
                         <img src={emailIcon} alt="email_icon" />
-                        <input id="emailInput" ref={emailEntry} type="email" placeholder="name@email.com" />
+                        <input type="email" id="emailInput" ref={emailEntry} placeholder="name@email.com" />
                     </div>
                 </div>
                 <div class="authItem">
                     <label for="password" class="inputLabel">Password</label>
                     <div class="inputGrid">
                         <img src={lockIcon} alt="lock_icon" />
-                        <input id="passInput" ref={passwordEntry} type="password" placeholder="●●●●●●●●" />
+                        <input type="password" id="passInput" ref={passwordEntry} placeholder="●●●●●●●●" />
                     </div>
                 </div>
 

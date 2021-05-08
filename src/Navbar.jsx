@@ -1,8 +1,12 @@
+// Import React essentials
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
+// Import icon assets
 import searchIcon from "./assets/img/search_white_24dp.svg";
 import homeIcon from "./assets/img/home_white_24dp.svg";
 import settingsIcon from "./assets/img/settings_white_24dp.svg";
+import loginIcon from "./assets/img/login.svg";
+// Import component dependencies
 import AddButton from "./assets/react_components/AddButton.jsx";
 import firebase from "firebase";
 import styled from "styled-components";
@@ -24,7 +28,7 @@ export const NavLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: .3s;
+  transition: 0.3s;
   color: white;
   & :hover {
     color: gray;
@@ -32,7 +36,6 @@ export const NavLink = styled(Link)`
 `;
 
 export default function Navbar() {
-
   let [isAuthorized, setAuthorized] = useState(false);
   useEffect(
     function () {
@@ -41,7 +44,6 @@ export default function Navbar() {
     },
     [isAuthorized]
   );
-
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -56,17 +58,21 @@ export default function Navbar() {
         <img src={homeIcon} className="home-icon nav-icon" />
       </NavLink>
       <AddButton></AddButton>
-
-      {isAuthorized ? (
+      <NavLink to="/settings">
+        <img src={settingsIcon} className="settings-icon nav-icon" />
+      </NavLink>
+      {/* {isAuthorized ? (
         <NavLink to="/settings">
           <img src={settingsIcon} className="settings-icon nav-icon" />
         </NavLink>
       ) : (
         <>
           <NavLink to="/signup">Signup</NavLink>
-          <NavLink to="/login">Login</NavLink>
+          <NavLink to="/login">
+            <img src={loginIcon} className="nav-icon"/>
+          </NavLink>
         </>
-      )}
+      )} */}
     </Nav>
   );
 }
