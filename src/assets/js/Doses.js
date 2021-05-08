@@ -3,7 +3,6 @@ import {DatabaseStorage}  from './DatabaseStorage.js';
 import {Schedules, IsToday}  from './Schedules.js';
 export class Doses extends DatabaseStorage{
     static StoreLocal(formattedDose) {
-        console.log(formattedDose);
         return super.StoreLocal(formattedDose, 'doses');
     }
     static HasTaken(id) {
@@ -20,7 +19,6 @@ export class Doses extends DatabaseStorage{
         let doses = this.GetDoses();
         let todaysDoses = [];
         let i = 0;
-        console.log(doses);
         doses.forEach(dose=> {
             if(IsToday(new Date(dose.dateTimeTakenMilis))||(dose.scheduleId!=-1&&Schedules.ScheduleIncludesToday(Schedules.FindScheduleWithId(dose.scheduleId)))||dose.scheduleId==-1) {
                 todaysDoses.push(dose);
@@ -33,7 +31,6 @@ export class Doses extends DatabaseStorage{
         return super.GenerateNewId('doses');
     }
     static FormatDose(drugID, doseAmount, doseType, scheduleId, dateTimeTakenMilis, experience="") {
-        console.log(this.GenerateNewId());
         if(drugID<0||doseAmount<0||doseType<0) {
             console.error("Failed to format dose. All necessary parameters must be positive.")
         } else{

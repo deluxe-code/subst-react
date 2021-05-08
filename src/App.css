@@ -65,7 +65,7 @@ body {
 
 .dose-cards-section {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     width: 100%;
 }
@@ -189,6 +189,8 @@ form {
 .edit-text-area {
     background-color: rgb(7, 7, 8);
     width: 100%;
+    font-size: 1.5em;
+    overflow: hidden;
     color: white;
 }
 .schedule-card {
@@ -266,4 +268,20 @@ h2 {
 }
 .search-select > input {
     width: 100%;
+}
+
+.dose-card-section-card {
+    background-color: rgb(70, 70, 70);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px;
+    font-size: 10px;
+    text-align: center;
+    width: 70%;
+}
+
+.highlighted {
+    color: rgb(0, 234, 255);
+    margin: 0px;
+    padding: 0px;
 }

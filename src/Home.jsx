@@ -4,11 +4,11 @@ import firebase from "firebase";
 import styled from "styled-components";
 import './Home.css';
 
+import { DrugChart } from "./assets/react_components/ChartComponents.jsx"
+
 import {DoseCardDisplay} from './assets/react_components/DoseCard.jsx';
 // import { AddOrb } from "./assets/react_components/AddOrb";
 export default function Home(match) {
-  
-    console.log(match);
     let [userEmail, setEmail] = useState("");
     let [isAuthorized, setAuthorized] = useState(false);
     useEffect(
@@ -47,7 +47,7 @@ export default function Home(match) {
 
         <div class="card">
             <span class="card-title">Your Progress</span>
-            <canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;January&quot;,&quot;February&quot;,&quot;March&quot;,&quot;April&quot;,&quot;May&quot;,&quot;June&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Dataset 0&quot;,&quot;fill&quot;:true,&quot;data&quot;:[]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{}}}"></canvas>        
+            <DrugChart></DrugChart>
         </div>
     </main>
   );
