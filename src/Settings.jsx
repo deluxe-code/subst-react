@@ -40,11 +40,11 @@ export default function Settings() {
   return (
     <Main>
         {isAuthorized && (
-      <>
-        <span style={{ color: "white" }}>{userEmail}</span>
-        <button onClick={() => firebase.auth().signOut()}>Sign out</button>
-      </>
-    )}
+          <>
+            <span style={{ color: "white" }}>{userEmail}</span>
+            <button onClick={() => firebase.auth().signOut()}>Sign out</button>
+          </>
+        )}
       <header>
         <img src={arrow_back} alt="back" />
         <h1>Settings</h1>
@@ -56,40 +56,33 @@ export default function Settings() {
             id="profilePicture"
             alt="profile picture"
           />
-          <div id="addProfilePictureContainer">
-            <img
-              src={add_a_photo}
-              id="addProfilePicture"
-              alt="new profile picture"
-            />
-          </div>
         </ProfileBlock>
         <CategoryBlock>
           <h2>ACCOUNT</h2>
-          <a href="#" class="settingBlock">
+          <a href="#" >
             <img src={person} alt="person" />
             <p>Account Settings</p>
           </a>
-          <a href="#" class="settingBlock">
+          <a href="#" >
             <img src={privacy} alt="privacy" />
-            <p>privacy</p>
+            <p>Privacy</p>
           </a>
-          <a href="#" class="settingBlock">
+          <a href="#" >
             <img src={layout} alt="layout" />
             <p>Layout</p>
           </a>
         </CategoryBlock>
         <CategoryBlock>
           <h2>GENERAL</h2>
-          <a href="#" class="settingBlock">
+          <a href="#" >
             <img src={palette} alt="palette" />
             <p>Appearance</p>
           </a>
-          <a href="#" class="settingBlock">
+          <a href="#" >
             <img src={notifications} alt="bell" />
             <p>Notifications</p>
           </a>
-          <a href="#" class="settingBlock">
+          <a href="#" >
             <img
               src={help_outline}
               alt="question mark"
@@ -99,15 +92,11 @@ export default function Settings() {
         </CategoryBlock>
         <CategoryBlock>
           <h2>OTHER</h2>
-          <a href="#" class="settingBlock">
-            <img src={policy} alt="policy" />
-            <p>Privacy Policy</p>
-          </a>
-          <a href="#" class="settingBlock">
+          <a href="#" >
             <img src={gavel} alt="gavel" />
             <p>Terms of Service</p>
           </a>
-          <a href="#" class="settingBlock">
+          <a href="#" >
             <img src={bug_report}alt="bug" />
             <p>Report a Bug</p>
           </a>
