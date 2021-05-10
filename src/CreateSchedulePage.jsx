@@ -4,6 +4,9 @@ import './DrugInfo.css';
 import {DoseCardDisplay} from './assets/react_components/DoseCard.jsx';
 import {Units} from './assets/js/Units.js';
 import {SearchSelect, UnitSelect, DrugSelect} from './assets/js/SearchSelect.js';
+import {MultiStepForm, FormDateRange, FormDrugSelect, FormUnitSelect, FormDoseAmount, FormTimeSelect} from "./MultiStepForm.jsx"
+
+import scheduleIcon from './assets//img/edit_calendar_white_24dp.svg';
 import { Doses } from "./assets/js/Doses";
 import { Schedules } from "./assets/js/Schedules";
 //import WeekdayPicker from "react-weekday-picker";
@@ -19,6 +22,12 @@ let dayOfWeekSelect = React.createRef();
 export default function AddDosePage(match) {
     let drugId = -1;
     let unitId = -1;
+    let time = -1;
+    let startDose = -1;
+    let endDose = -1;
+    let startDate = -1;
+    let endDate = -1;
+    let daysOfWeek = -1;
     console.log(match); 
     var modifiers = {
         'weekend': function(weekday) {
@@ -26,6 +35,7 @@ export default function AddDosePage(match) {
         }
       };
     
+      /*
   return (
       
     <main>
@@ -38,73 +48,31 @@ export default function AddDosePage(match) {
             <input className="form-control" type="number" id="end-dose" ref={endDose}></input>
             <label id="units">Units</label>
             <UnitSelect hasAddButton={true} ref={unitSelect} onChange={(option)=>{unitId=option.optionId}}></UnitSelect>
-            <div className="d-flex flex-row justify-content-center" id="date-range">
-                <input type="date" className="form-control" id="start-date" ref={startDate}></input>
-                <input type="date" className="form-control" id="end-date" ref={endDate}></input>
-            </div><label>Time</label>
-            <DayOfWeekSelector ref={dayOfWeekSelect}></DayOfWeekSelector>
+      
             <input type="time" className="form-control" id="time" ref={time}></input>
             <button className="btn btn-primary" id="submit" type="button" onClick={submitSchedule}>Submit</button>
         </form>
     </main>
   );
+  */
   function submitSchedule() {
     //DayOfWeekSelect
-    
-    Schedules.Store(Schedules.FormatSchedule(drugId, startDose.current.value, endDose.current.value, unitId, startDate.current.value, endDate.current.value, new Date(time.current.value).getTime(), dayOfWeekSelect.current.getChecked().map(day=>day.Value), -1));
+    Schedules.Store(Schedules.FormatSchedule(drugId, startDose, endDose, unitId, startDate, endDate, new Date(time).getTime(), (Array.isArray(daysOfWeek)?daysOfWeek:[daysOfWeek]).map(day=>day.Value), -1));
   }
-}
 
-export class DayOfWeekSelector extends React.Component {
-  state = {
-    days: [
-      {
-        Name: 'Su',
-        Value: 0,
-        Checked: false
-      },
-      {
-        Name: 'Mo',
-        Value: 1,
-        Checked: false
-      },
-      {
-        Name: 'Tu',
-        Value: 2,
-        Checked: false
-      },
-      {
-        Name: 'We',
-        Value: 3,
-        Checked: false
-      },
-      {
-        Name: 'Th',
-        Value: 4,
-        Checked: false
-      },
-      {
-        Name: 'Fr',
-        Value: 5,
-        Checked: false
-      },
-      {
-        Name: 'Sa',
-        Value: 6,
-        Checked: false
-      }
-    ]
-  }
-  render() {
-    return (
-    <div className="day-of-week-selector">
-      <div>
-        {this.state.days.map(day => <a className={day.Checked?"day-select checked" : "day-select unchecked"} onClick={()=>{day.Checked=!day.Checked; this.setState({days:this.state.days}); console.log(this.state.days)}}>{day.Name}</a>)}
+  return (    
+    <div>
+      <div style={{position: "fixed", display: "flex", flexDirection: "column", alignContent: "center"}}>
+          <h1 style={{paddingLeft: "50px", marginBottom:"0px"}}>Create</h1>
+          <h2 style={{paddingLeft: "50px"}}>Schedule</h2>
+          <img src={scheduleIcon} height="400vw" style={{position:"absolute", top:"150px"}}/>
       </div>
-    </div>);
-  }
-
-  getChecked() {
-    return this.state.days.filter(day=>day.Checked);
-  }
+      <MultiStepForm onSubmit={submitSchedule}>
+          <FormDrugSelect onChange={(value)=>{drugId = value}}></FormDrugSelect>
+          <FormDateRange onChange={(value)=>{startDate = value.startDate; endDate = value.endDate; daysOfWeek = value.daysOfWeek}}></FormDateRange>
+          <FormUnitSelect onChange={(value)=>{unitId = value}}></FormUnitSelect>
+          <FormTimeSelect onChange={(value)=>{time = value}}></FormTimeSelect>
+      </MultiStepForm>
+    </div>
+  );
 }

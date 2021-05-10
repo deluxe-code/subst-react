@@ -42,7 +42,7 @@ export default function Home(match) {
             <span class="card-title">Today</span>
             <span class="card-subtitle">Today's doses</span>
             <DoseCardDisplay></DoseCardDisplay>
-            <a href="add_dose"><button>Add Dose</button></a>
+            <Link to="add_dose"><button>Add Dose</button></Link>
         </div>
 
         <div class="card">

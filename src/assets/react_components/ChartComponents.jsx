@@ -22,13 +22,16 @@ export function DrugChart(match) {
     }
     let updateData = (option)=>{
         if(Doses.GetDosesCategorizedByDrug().get(option.optionId)!=null) {
+            let doseList = Doses.GetDosesCategorizedByDrug().get(option.optionId).sort(function(a, b){return a.dateTimeTakenMilis-b.dateTimeTakenMilis});
+            let doseAmountList = doseList.map(dose => dose.doseAmount);
+            let doseLabelList = doseList.map(dose => new Date(dose.dateTimeTakenMilis).getMonth()+1 + "/" + new Date(dose.dateTimeTakenMilis).getDate());
             setData({
-                labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+                labels: doseLabelList,
                     datasets: [
                     {
-                        label: "Population (millions)",
+                        label: `${option.title} usage over time`,
                         backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                        data: Doses.GetDosesCategorizedByDrug().get(option.optionId).map(dose => dose.doseAmount)
+                        data: doseAmountList
                     }
                     ]
             })

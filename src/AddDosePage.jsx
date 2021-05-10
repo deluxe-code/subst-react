@@ -6,9 +6,10 @@ import {Units} from './assets/js/Units.js';
 import {SearchSelect, UnitSelect, DrugSelect} from './assets/js/SearchSelect.js';
 import { Doses } from "./assets/js/Doses";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+
+import {MultiStepForm, FormDrugSelect, FormUnitSelect, FormDoseAmount, FormTimeSelect} from "./MultiStepForm.jsx"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import MultiStepForm from "./MultiStepForm";
 import styled from 'styled-components';
 import { checkPropTypes } from "prop-types";
 import doseIcon from './assets/img/medication_white_24dp.svg';
@@ -44,40 +45,3 @@ export default function AddDosePage(match) {
     Doses.Store(Doses.FormatDose(drugId, amount, unitId, -1, new Date(time).getTime()));
   }
 }
-
-function FormDrugSelect(props) {
-    return (
-        <div>
-            <h2>Drug Name</h2>
-            <DrugSelect hasAddButton={true} onChange={(option)=>{props.onChange(option.optionId)}}></DrugSelect>
-        </div>
-    );
-}
-
-function FormUnitSelect(props) {
-    return (
-        <div>
-            <label id="units">Units</label>
-            <UnitSelect hasAddButton={true} onChange={(option)=>{props.onChange(option.optionId)}}></UnitSelect>
-        </div>
-    );
-}
-
-function FormDoseAmount(props) {
-    return (
-        <div>
-            <label className="d-flex justify-content-center">Amount</label>
-            <input className="form-control" type="number" id="dose-amount" onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
-        </div>
-    );
-}
-
-function FormTimeSelect(props) {
-    return(
-        <div>
-            <label>Time</label>
-            <input type="datetime-local" className="form-control" id="time" onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
-        </div>
-    );
-}
- 
