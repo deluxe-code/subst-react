@@ -15,12 +15,30 @@ import gavel from "./assets/img/gavel_white_24dp.svg";
 import bug_report from "./assets/img/bug_report_white_24dp.svg" ;
 import styled from 'styled-components';
 import { AppContext } from "./App";
+const Main = styled.main`
+  background-color: black;
+  color: white;
+`;
+const SettingsContent = styled.div`
+
+`;
+
+const ProfileBlock = styled.div`
+
+`;
+
+const CategoryBlock = styled.div`
+  a, a:link, a:visited, a:focus, a:hover, a:active{
+    color: white;
+    text-decoration:none; 
+    cursor: crosshair;
+  }
+`;
 export default function Settings() {
   let [isAuthorized, userEmail] = useContext(AppContext);
 
   return (
-
-    <div style={{backgroundColor: "white"}}>
+    <Main>
         {isAuthorized && (
       <>
         <span style={{ color: "white" }}>{userEmail}</span>
@@ -31,8 +49,8 @@ export default function Settings() {
         <img src={arrow_back} alt="back" />
         <h1>Settings</h1>
       </header>
-      <div id="settingsContent">
-        <div id="profileBlock">
+      <SettingsContent>
+        <ProfileBlock>
           <img
             src={smilecheems}
             id="profilePicture"
@@ -45,8 +63,8 @@ export default function Settings() {
               alt="new profile picture"
             />
           </div>
-        </div>
-        <div class="categoryBlock">
+        </ProfileBlock>
+        <CategoryBlock>
           <h2>ACCOUNT</h2>
           <a href="#" class="settingBlock">
             <img src={person} alt="person" />
@@ -60,8 +78,8 @@ export default function Settings() {
             <img src={layout} alt="layout" />
             <p>Layout</p>
           </a>
-        </div>
-        <div class="categoryBlock">
+        </CategoryBlock>
+        <CategoryBlock>
           <h2>GENERAL</h2>
           <a href="#" class="settingBlock">
             <img src={palette} alt="palette" />
@@ -78,8 +96,8 @@ export default function Settings() {
             />
             <p>Help</p>
           </a>
-        </div>
-        <div class="categoryBlock">
+        </CategoryBlock>
+        <CategoryBlock>
           <h2>OTHER</h2>
           <a href="#" class="settingBlock">
             <img src={policy} alt="policy" />
@@ -93,11 +111,11 @@ export default function Settings() {
             <img src={bug_report}alt="bug" />
             <p>Report a Bug</p>
           </a>
-        </div>
+        </CategoryBlock>
         <footer>
           <button>Sign Out</button>
         </footer>
-      </div>
-    </div>
+      </SettingsContent>
+    </Main>
   );
 }
