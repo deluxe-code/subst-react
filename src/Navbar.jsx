@@ -1,5 +1,5 @@
 // Import React essentials
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 // Import icon assets
 import searchIcon from "./assets/img/search_white_24dp.svg";
@@ -10,7 +10,6 @@ import statisticsIcon from "./assets/img/analytics_white_24dp.svg";
 import loginIcon from "./assets/img/login.svg";
 // Import component dependencies
 import AddButton from "./assets/react_components/AddButton.jsx";
-import firebase from "firebase";
 import styled from "styled-components";
 
 const Nav = styled.nav`
@@ -37,47 +36,24 @@ export const NavLink = styled(Link)`
   }
 `;
 
-export default function Navbar() {
-  let [isAuthorized, setAuthorized] = useState(false);
-  useEffect(
-    function () {
-      if (isAuthorized) {
-      }
-    },
-    [isAuthorized]
-  );
+export const NavbarContext = React.createContext();
 
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      setAuthorized(true);
-    } else {
-      setAuthorized(false);
-    }
-  });
+export default function Navbar() {
+  let [menuOpened, setMenuOpened] = useState(false);
   return (
-    <Nav onClick={() => window.navigator.vibrate(100)}>
+    <Nav onClick={() => window.navigator.vibrate(10)}>
       <NavLink to="/">
         <img src={homeIcon} className="home-icon nav-icon" />
       </NavLink>
+      <NavbarContext.Provider value={[menuOpened, setMenuOpened]}>
       <AddButton></AddButton>
       <NavLink to="/statistics_page">
         <img src={statisticsIcon} className="statistics-icon nav-icon" />
       </NavLink>
+      </NavbarContext.Provider>
       <NavLink to="/settings">
         <img src={settingsIcon} className="settings-icon nav-icon" />
       </NavLink>
-      {/* {isAuthorized ? (
-        <NavLink to="/settings">
-          <img src={settingsIcon} className="settings-icon nav-icon" />
-        </NavLink>
-      ) : (
-        <>
-          <NavLink to="/signup">Signup</NavLink>
-          <NavLink to="/login">
-            <img src={loginIcon} className="nav-icon"/>
-          </NavLink>
-        </>
-      )} */}
     </Nav>
   );
 }
