@@ -4,15 +4,16 @@ import firebase from "firebase";
 import arrow_back from "./assets/img/arrow_back-24px.svg";
 import smilecheems from "./assets/img/smilecheems.png";
 import add_a_photo from "./assets/img/add_a_photo-24px.svg";
-import person from "./assets/img/person.svg";
-import security from "./assets/img/security-24px.svg";
-import view_agenda from "./assets/img/view_agenda-24px.svg";
-import palette from "./assets/img/palette-24px.svg";
-import notifications from "./assets/img/notifications-24px.svg";
-import help_outline from "./assets/img/help_outline-24px.svg";
+import person from "./assets/img/manage_accounts_white_24dp.svg";
+import privacy from "./assets/img/lock_white_24dp.svg";
+import layout from "./assets/img/dashboard_customize_white_24dp.svg";
+import palette from "./assets/img/color_lens_white_24dp.svg";
+import notifications from "./assets/img/notifications_white_24dp.svg";
+import help_outline from "./assets/img/help_outline_white_24dp.svg";
 import policy from "./assets/img/policy-24px.svg";
-import gavel from "./assets/img/gavel-24px.svg";
-import bug_report from "./assets/img/bug_report-24px.svg" ;
+import gavel from "./assets/img/gavel_white_24dp.svg";
+import bug_report from "./assets/img/bug_report_white_24dp.svg" ;
+import styled from 'styled-components';
 import { AppContext } from "./App";
 export default function Settings() {
   let [isAuthorized, userEmail] = useContext(AppContext);
@@ -52,12 +53,12 @@ export default function Settings() {
             <p>Account Settings</p>
           </a>
           <a href="#" class="settingBlock">
-            <img src={security} alt="security" />
-            <p>Security</p>
+            <img src={privacy} alt="privacy" />
+            <p>privacy</p>
           </a>
           <a href="#" class="settingBlock">
-            <img src={view_agenda} alt="paths" />
-            <p>Starter Paths</p>
+            <img src={layout} alt="layout" />
+            <p>Layout</p>
           </a>
         </div>
         <div class="categoryBlock">
