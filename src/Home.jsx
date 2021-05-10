@@ -25,7 +25,6 @@ export default function Home(match) {
 
   return (
     <main>
-
       <div class="card">
         <span class="card-title">Today</span>
         <span class="card-subtitle">Today's doses</span>
