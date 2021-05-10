@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect, useContext } from "react"
 import { Link, useHistory } from 'react-router-dom'
 import firebase from 'firebase';
 
@@ -16,6 +16,7 @@ export default function Account() {
   
   return (
     <>
+    
     <h2>My Account</h2>
     <span ref={userName}></span>
     </>

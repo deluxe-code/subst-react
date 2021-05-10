@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import './DrugInfo.css';
 import {DoseCardDisplay} from './assets/react_components/DoseCard.jsx';
 import { EditText, EditTextarea } from 'react-edit-text';
 import { Drugs } from "./assets/js/Drugs";
 import { Doses } from "./assets/js/Doses";
+import './DrugInfo.css';
 
 export default function DrugInfo(match) {
     let drugId = match.match.params.id;

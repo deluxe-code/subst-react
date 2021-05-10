@@ -1,4 +1,6 @@
-import { Component } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom";
+import firebase from "firebase";
 import arrow_back from "./assets/img/arrow_back-24px.svg";
 import smilecheems from "./assets/img/smilecheems.png";
 import add_a_photo from "./assets/img/add_a_photo-24px.svg";
@@ -11,9 +13,19 @@ import help_outline from "./assets/img/help_outline-24px.svg";
 import policy from "./assets/img/policy-24px.svg";
 import gavel from "./assets/img/gavel-24px.svg";
 import bug_report from "./assets/img/bug_report-24px.svg" ;
-export default function DrugInfo(match) {
+import { AppContext } from "./App";
+export default function Settings() {
+  let [isAuthorized, userEmail] = useContext(AppContext);
+
   return (
+
     <div style={{backgroundColor: "white"}}>
+        {isAuthorized && (
+      <>
+        <span style={{ color: "white" }}>{userEmail}</span>
+        <button onClick={() => firebase.auth().signOut()}>Sign out</button>
+      </>
+    )}
       <header>
         <img src={arrow_back} alt="back" />
         <h1>Settings</h1>

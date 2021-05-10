@@ -1,48 +1,45 @@
 import React, { useState, useRef, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom";
 import firebase from "./Firebase.js";
 import Navbar from "./Navbar.jsx";
 import Home from "./Home.jsx";
-import Signup from "./Signup.jsx";
-import Login from "./Login.jsx";
 import Account from "./Account.jsx";
 import DrugInfo from "./DrugInfo.jsx";
 import ScheduleInfo from "./ScheduleInfo.jsx";
 import AddDosePage from "./AddDosePage.jsx";
 import CreateSchedule from "./CreateSchedulePage.jsx";
 import Settings from "./Settings.jsx";
-import AuthPage from "./Authenticating.jsx";
+import AuthPage from "./Authentication.jsx";
 import StatisticsPage from "./StatisticsPage.jsx";
+import LandingPage from "./LandingPage.jsx";
 import "./App.css";
+
+export const AppContext = React.createContext();
 
 export default function App() {
   let [isAuthorized, setAuthorized] = useState(false);
+  let [email, setEmail] = useState(null);
   useEffect(
     function () {
       if (isAuthorized) {
+        setEmail(firebase.auth().currentUser.email);
+      } else {
+        setEmail(null);
       }
     },
     [isAuthorized]
   );
-
   firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      setAuthorized(true);
-    } else {
-      setAuthorized(false);
-    }
-  });
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (!user) {
-        console.error("User is not signed in!");
-      } else {
-        console.log("User is signed in??");
-      }
-    });
+    // if (user) {
+    //   setAuthorized(true);
+    // } else {
+    //   setAuthorized(false);
+    // }
+    setAuthorized((user ? true : false));
   });
 
   return (
+    <AppContext.Provider value={[isAuthorized, email]}>
     <Router>
       {isAuthorized ? (
         <>
@@ -55,12 +52,12 @@ export default function App() {
             <Route path="/create_schedule" component={CreateSchedule} />
             <Route path="/settings" component={Settings} />
             <Route path="/statistics_page" component={StatisticsPage} />
+            <Route path="/about" component={LandingPage} />
           </Switch>
           <Navbar />
         </>
-      ) : (
-        <AuthPage />
-      )}
+      ) : <AuthPage/>}
     </Router>
+    </AppContext.Provider>
   );
 }
