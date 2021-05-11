@@ -1,7 +1,9 @@
 import React, {useState, useRef, useEffect} from "react";
 import { Link, useHistory } from 'react-router-dom';
+import {DayOfWeekSelector} from "./assets/react_components/DayOfWeekSelector.jsx"
+import {SearchSelect, UnitSelect, DrugSelect} from './assets/js/SearchSelect.js';
 import styled from 'styled-components';
-export default function MultiStepForm(props) {
+export function MultiStepForm(props) {
     let pages = props.children.length==null?[props.children]:props.children;
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
     let currentPage = pages[currentPageIndex];
@@ -65,3 +67,57 @@ export default function MultiStepForm(props) {
     </MultiStepFormWrapper>
     );
 }
+export function FormDrugSelect(props) {
+    return (
+        <div>
+            <h2>Drug Name</h2>
+            <DrugSelect hasAddButton={true} onChange={(option)=>{props.onChange(option.optionId)}}></DrugSelect>
+        </div>
+    );
+}
+
+export function FormUnitSelect(props) {
+    return (
+        <div>
+            <label id="units">Units</label>
+            <UnitSelect hasAddButton={true} onChange={(option)=>{props.onChange(option.optionId)}}></UnitSelect>
+        </div>
+    );
+}
+
+export function FormDoseAmount(props) {
+    return (
+        <div>
+            <label className="d-flex justify-content-center">Amount</label>
+            <input className="form-control" type="number" id="dose-amount" onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
+        </div>
+    );
+}
+
+export function FormTimeSelect(props) {
+    return(
+        <div>
+            <label>Time</label>
+            <input type="datetime-local" className="form-control" id="time" onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
+        </div>
+    );
+}
+
+export function FormDateRange(props) {
+    let startDate = -1;
+    let endDate = -1;
+    let daysOfWeek = -1;
+    let triggerChange = ()=>{
+        if(startDate!=-1 && endDate!=-1 && daysOfWeek!=-1) {
+            props.onChange({startDate:startDate, endDate:endDate, daysOfWeek:daysOfWeek});
+        }
+    }
+    return(
+        <div className="d-flex flex-row justify-content-center" id="date-range">
+            <input type="date" className="form-control" id="start-date" onInput={(evt)=>{startDate = evt.target.value; triggerChange()}}></input>
+            <input type="date" className="form-control" id="end-date" onInput={(evt)=>{endDate = evt.target.value; triggerChange()}}></input>
+            <DayOfWeekSelector onChange={(evt)=>{daysOfWeek=evt;triggerChange()}}></DayOfWeekSelector>
+        </div>
+    );
+}
+//

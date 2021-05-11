@@ -2,5 +2,6 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Developers
-Ethan N, Jacob A
+## Contributors
+Ethan N
+Jacob A
