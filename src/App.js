@@ -17,7 +17,8 @@ import "./App.css";
 export const AppContext = React.createContext();
 
 export default function App() {
-  let [isAuthorized, setAuthorized] = useState(false);
+  let [isAuthorized, setAuthorized] = useState(null);
+  let [firebaseInitialized, setFirebaseInitialized] = useState(false);
   let [email, setEmail] = useState(null);
   useEffect(
     function () {
@@ -56,7 +57,10 @@ export default function App() {
           </Switch>
           <Navbar />
         </>
-      ) : <AuthPage/>}
+      ) : 
+      <AuthPage/>}
+        {/* Insert a loading sequence component here? and if firebase onAuthStateChanged runs 
+        and is still false, only then show Login page / Landing page? */}
     </Router>
     </AppContext.Provider>
   );

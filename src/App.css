@@ -4,9 +4,11 @@ html, body, #root {
     margin: 0;
     padding: 0;
 }
+#root {
+    display: flex;
+    flex-direction: column;
+}
 main {
-    /* Temporary color */
-    background-color: inherit;
     width: 100%;
     min-height: 1000px;
     display: flex;

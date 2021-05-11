@@ -4,7 +4,91 @@ import { v4 as uuidv4 } from "uuid";
 import emailIcon from "./assets/email.svg";
 import lockIcon from "./assets/lock.svg";
 import firebase from "firebase";
-import "./Authentication.css";
+import styled from "styled-components";
+// import "./Authentication.css";
+
+const StyledAuthentication = styled.main`
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  header {
+    padding: 20px;
+    font-size: 1rem;
+    color: white;
+    font-weight: 600;
+    align-self: flex-start;
+  }
+  #authSection {
+    border-radius: 40px;
+    width: 100%;
+    max-width: 300px;
+  }
+  #authForm {
+    margin-bottom: 50px;
+  }
+  .authItem {
+    margin-bottom: 15px;
+  }
+  .authItem label {
+    margin-left: 30px;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: white;
+  }
+  .authItem .inputGrid {
+    margin-top: 8px;
+    width: 100%;
+    height: 40px;
+    display: grid;
+    grid-template-columns: 60px auto;
+    position: relative;
+  }
+  .inputGrid img {
+    margin: auto;
+    grid-column: 1;
+    z-index: 1;
+  }
+  .inputGrid input {
+    position: absolute;
+    width: 100%;
+    height: inherit;
+    background-color:#bed7eebf;
+    border-radius: 1000px;
+    grid-column: span 2;
+    z-index: 0;
+    font-weight: 500;
+    padding-left: calc(60px/1.1);
+    box-sizing: border-box;
+  }
+  .inputGrid input:focus::placeholder {
+    color: transparent;
+  }
+  #passwordOptions {
+    font-size: .8em;
+}
+#rememberOption {
+    width: max-content;
+    float: left;
+}
+#rememberToggle {
+    transform: scale(1.2);
+}
+#forgotPassword {
+    float: right;
+}
+#actionContainer {
+    padding: 20px 0px 0px 0px;
+}
+#actionContainer #actionButton {
+    background-color: teal;
+    color: #FAFAFA;
+    display: block;
+    margin: 0 auto 0 auto;
+    border-radius: 1000px;
+    padding:  10px 25px 10px 25px;
+    font-size: 1.25em;
+}
+`;
 
 function Authentication() {
   const emailEntry = useRef();
@@ -86,10 +170,10 @@ function Authentication() {
     });
   }
   return (
-    <main id="LoginMain">
+    <StyledAuthentication id="LoginMain">
       <header>
-        <h1>Create your</h1>
-        <h1>account</h1>
+        <h1>Sign in here.</h1>
+        {/* <h1>account</h1> */}
       </header>
       <section id="authSection">
         <div id="authForm">
@@ -143,7 +227,7 @@ function Authentication() {
           </button>
         </div>
       </section>
-    </main>
+    </StyledAuthentication>
   );
 }
 

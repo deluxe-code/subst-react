@@ -7,15 +7,48 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Manage & monitor drug habits with ease"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>React App</title>
+    <title>Subst</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('worker.js').then(function(registration) {
+            console.log('Worker registration successful', registration.scope);
+          }, function(err) {
+            console.log('Worker registration failed', err);
+          }).catch(function(err) {
+            console.log(err);
+          });
+        });
+      } else {
+        console.log('Service Worker is not supported by browser.');
+      }
+
+      let deferredPrompt;
+
+export const pwaTrackingListeners = () => {
+  const fireAddToHomeScreenImpression = event => {
+    fireTracking("Add to homescreen shown");
+    //will not work for chrome, untill fixed
+    event.userChoice.then(choiceResult => {
+      fireTracking(`User clicked ${choiceResult}`);
+    });
+    //This is to prevent `beforeinstallprompt` event that triggers again on `Add` or `Cancel` click
+    window.removeEventListener(
+      "beforeinstallprompt",
+      fireAddToHomeScreenImpression
+    );
+  };
+  window.addEventListener("beforeinstallprompt", fireAddToHomeScreenImpression);
+}
+    </script>
   </body>
 </html>
 

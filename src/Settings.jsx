@@ -19,7 +19,7 @@ export default function Settings() {
 
   return (
 
-    <div style={{backgroundColor: "white"}}>
+    <main style={{backgroundColor: "white"}}>
         {isAuthorized && (
       <>
         <span style={{ color: "white" }}>{userEmail}</span>
@@ -97,6 +97,6 @@ export default function Settings() {
           <button>Sign Out</button>
         </footer>
       </div>
-    </div>
+    </main>
   );
 }

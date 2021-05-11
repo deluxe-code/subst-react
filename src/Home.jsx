@@ -2,13 +2,54 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase";
 import styled from "styled-components";
-import "./Home.css";
-import { AppContext } from "./App"
+// import "./Home.css";
+import { AppContext } from "./App";
 
 import { DrugChart } from "./assets/react_components/ChartComponents.jsx";
 
 import { DoseCardDisplay } from "./assets/react_components/DoseCard.jsx";
 // import { AddOrb } from "./assets/react_components/AddOrb";
+
+const HomeMain = styled.main`
+  /*
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+    align-items: center;
+    */
+  .card * {
+    margin-top: 5px;
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.8rem;
+    color: #6c757d;
+  }
+
+  button /* Specify the type of button here? */ {
+    background-color: black;
+    padding: 8px 13px 8px 13px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    transition: 0.15s;
+  }
+  button:hover {
+    background-color: #0069d9;
+  }
+
+  button:hover,
+  a:hover {
+    cursor: pointer;
+  }
+`;
+
 export default function Home(match) {
   let [userEmail, setEmail] = useState("");
   let isAuthorized = useContext(AppContext);
@@ -24,8 +65,7 @@ export default function Home(match) {
   );
 
   return (
-    <main>
-
+    <HomeMain>
       <div class="card">
         <span class="card-title">Today</span>
         <span class="card-subtitle">Today's doses</span>
@@ -39,6 +79,6 @@ export default function Home(match) {
         <span class="card-title">Your Progress</span>
         <DrugChart></DrugChart>
       </div>
-    </main>
+    </HomeMain>
   );
 }
