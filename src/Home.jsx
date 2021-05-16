@@ -30,7 +30,7 @@ const HomeMain = styled.main`
     color: #6c757d;
   }
 
-  button /* Specify the type of button here? */ {
+  button {
     background-color: black;
     padding: 8px 13px 8px 13px;
     outline: none;

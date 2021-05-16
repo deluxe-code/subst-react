@@ -4,6 +4,13 @@ html, body, #root {
     margin: 0;
     padding: 0;
 }
+body {
+    background: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial;
+}
 #root {
     display: flex;
     flex-direction: column;
@@ -19,15 +26,9 @@ main {
     box-sizing: border-box;
     overflow: scroll;
 }
-body {
-    background: black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial;
-}
 input, button {
     border: 0;
+    outline: 0;
 }
 /* #optionsBlock {
     overflow: hidden;

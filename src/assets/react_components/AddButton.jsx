@@ -60,8 +60,8 @@ export default function AddButton() {
   return (
     <>
       {menuOpened ? <AddMenu /> : null}
-      <div className="nav-item">
-        <button ref={addBtn} onClick={() => setMenuOpened(!menuOpened)}>
+      <div className="nav-item" style={{display: 'flex', justifyContent: 'center'}}>
+        <button ref={addBtn} style={{background: 'black'}} onClick={() => setMenuOpened(!menuOpened)}>
           <img src={addBoxIcon} className="add-box-icon nav-icon" />
         </button>
       </div>
