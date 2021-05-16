@@ -3,8 +3,8 @@ export class Units extends DatabaseStorage {
     static GetUnits() {
         return super.GetData('units');
     }
-    static StoreLocal(unitName) {
-        super.StoreLocal(super.FormatObject(this.GenerateNewId(), {unitName:unitName}), 'units');
+    static StoreLocal(unit) {
+        super.StoreLocal(super.FormatObject(unit.id==null?this.GenerateNewId():unit.id, {unitName:unit.title}), 'units');
     }
     static GenerateNewId() {
         return super.GenerateNewId('units');
@@ -18,7 +18,7 @@ export class Units extends DatabaseStorage {
         return unitsWithName.length>0;
     }
     static AddDefault() {
-        if(!Units.UnitNameExists(DefaultUnitNames[0])) {
+        if(!Units.UnitNameExists(DefaultUnitNames[0].title)) {
             DefaultUnitNames.forEach(unit=>{
                 Units.Store(unit);
             })
@@ -26,4 +26,5 @@ export class Units extends DatabaseStorage {
     }
 }
 
-const DefaultUnitNames = ["Gram(s)", "Pill(s)", "Injection(s)", "Hit(s)", "Milligram(s)", "Cigarette(s)"]
+
+const DefaultUnitNames = [{title:"No unit specified", id:-1},{title:"Gram(s)", id:0}, {title:"Pill(s)", id:1}, {title:"Injection(s)", id:2}, {title:"Hit(s)", id:3}, {title:"Milligram(s)", id:4}, {title:"Cigarette(s)", id:5}]

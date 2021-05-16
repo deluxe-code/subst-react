@@ -34,7 +34,6 @@ export default function AddDosePage(match) {
         </div>
         <MultiStepForm onSubmit={submitDose}>
             <FormDrugSelect onChange={(value)=>{drugId = value}}></FormDrugSelect>
-            <FormUnitSelect onChange={(value)=>{unitId = value}}></FormUnitSelect>
             <FormDoseAmount onChange={(value)=>{amount = value}}></FormDoseAmount>
             <FormTimeSelect onChange={(value)=>{time = value}}></FormTimeSelect>
         </MultiStepForm>
@@ -42,6 +41,6 @@ export default function AddDosePage(match) {
   );
   function submitDose() {
     window.location.pathname = '/'
-    Doses.Store(Doses.FormatDose(drugId, amount, unitId, -1, new Date(time).getTime()));
+    Doses.Store(Doses.FormatDose(drugId, amount, -1, new Date(time).getTime()));
   }
 }

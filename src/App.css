@@ -16,6 +16,14 @@ main {
     padding-bottom: 40px;
     box-sizing: border-box;
     overflow: scroll;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+}
+
+h1 {
+    color: white;
 }
 body {
     background: black;
@@ -53,7 +61,11 @@ input, button {
 } */
 @keyframes revealAddMenu {
     from {height: 0px; opacity: 0}
-    to {height: 100px; opacity: 1}
+    to {height: 100px; opacity: 1;}
+}
+@keyframes closeAddMenu {
+    from {height: 100px; opacity: 1}
+    to {height: 0px; opacity: 0;}
 }
 .card h1{
     color: white;
@@ -264,7 +276,7 @@ h2 {
     overflow: hidden;
 }
 .error {
-    color: red;
+    color: grey;
 }
 .search-select > input {
     width: 100%;
@@ -284,4 +296,26 @@ h2 {
     color: rgb(0, 234, 255);
     margin: 0px;
     padding: 0px;
+}
+
+.fade-apper.fadeEnter {
+    opacity: 0;
+    z-index: 1;
+}
+
+.fade-apper-active.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 250ms linear 100ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 100ms linear;
+}
+p {
+    color: white;
 }

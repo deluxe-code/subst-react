@@ -5,7 +5,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import searchIcon from "./assets/img/search_white_24dp.svg";
 import homeIcon from "./assets/img/home_white_24dp.svg";
 import settingsIcon from "./assets/img/settings_white_24dp.svg";
-
+import { HapticComponent } from "./assets/react_components/HapticComponent.jsx"
 import statisticsIcon from "./assets/img/analytics_white_24dp.svg";
 import loginIcon from "./assets/img/login.svg";
 // Import component dependencies
@@ -41,19 +41,21 @@ export const NavbarContext = React.createContext();
 export default function Navbar() {
   let [menuOpened, setMenuOpened] = useState(false);
   return (
-    <Nav onClick={() => window.navigator.vibrate(10)}>
-      <NavLink to="/">
-        <img src={homeIcon} className="home-icon nav-icon" />
-      </NavLink>
-      <NavbarContext.Provider value={[menuOpened, setMenuOpened]}>
-      <AddButton></AddButton>
-      <NavLink to="/statistics_page">
-        <img src={statisticsIcon} className="statistics-icon nav-icon" />
-      </NavLink>
-      </NavbarContext.Provider>
-      <NavLink to="/settings">
-        <img src={settingsIcon} className="settings-icon nav-icon" />
-      </NavLink>
+    <HapticComponent>
+    <Nav>
+        <NavLink to="/">
+          <img src={homeIcon} className="home-icon nav-icon" />
+        </NavLink>
+        <NavbarContext.Provider value={[menuOpened, setMenuOpened]}>
+        <AddButton></AddButton>
+        <NavLink to="/statistics_page">
+          <img src={statisticsIcon} className="statistics-icon nav-icon" />
+        </NavLink>
+        </NavbarContext.Provider>
+        <NavLink to="/settings">
+          <img src={settingsIcon} className="settings-icon nav-icon" />
+        </NavLink>
     </Nav>
+    </HapticComponent>
   );
 }

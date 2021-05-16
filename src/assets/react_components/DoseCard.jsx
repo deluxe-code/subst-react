@@ -87,7 +87,7 @@ class DoseCardDropdown extends React.Component {
                         <button type="button"><p className="highlighted">{Drugs.FindDrugWithID(this.props.dose.drugID).drugName}</p> Info</button>
                     </Link>
                     <div className="dose-card-section-card">
-                        <h1>You took <p className="highlighted">{this.props.dose.doseAmount}</p> {Units.GetElementWithId(this.props.dose.doseType).unitName}</h1>
+                        <h1>You took <p className="highlighted">{this.props.dose.doseAmount}</p> {Units.GetElementWithId(Drugs.FindDrugWithID(this.props.dose.drugID).unitId).unitName}</h1>
                     </div>
                     <div className="dose-card-section-card">
                         <h1>Time Elapsed: <p className="highlighted">{this.state.time}</p></h1>
