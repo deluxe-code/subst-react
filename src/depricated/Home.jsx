@@ -1,16 +1,13 @@
-
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase";
 import styled from "styled-components";
 //import "./Home.css";
-import { AppContext } from "./App"
-import {HapticComponent} from "./assets/react_components/HapticComponent.jsx"
-import { DrugChart } from "./assets/react_components/ChartComponents.jsx";
+import { AppContext } from "../App"
+import {HapticComponent} from "../assets/react_components/HapticComponent.jsx"
+import { DrugChart } from "../assets/react_components/ChartComponents.jsx";
 
-import addBoxIcon from "./assets/img/add_box_white_24dp.svg";
-import { DoseCardDisplay } from "./assets/react_components/DoseCard.jsx";
-import substLogoRed from "./assets/img/SPill.svg"
+import { DoseCardDisplay } from "../assets/react_components/DoseCard.jsx";
 // import { AddOrb } from "./assets/react_components/AddOrb";
 
 const HomeMain = styled.main`
@@ -20,23 +17,17 @@ const HomeMain = styled.main`
     flex-direction: column;
     align-items: center;
     */
+  .card * {
+    margin-top: 5px;
+  }
 
   .card-title {
     font-size: 1.4rem;
-    font-weight: bold;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
   }
 
   .card-subtitle {
-    font-size: 1.2rem;
-    color: white;
-    margin-top: 50px;
-    margin-bottom: 25px;
-    text-align: left;
-    font-weight: bold;
-    align-self: start;
+    font-size: 0.8rem;
+    color: #6c757d;
   }
 
   button /* Specify the type of button here? */ {
@@ -45,7 +36,7 @@ const HomeMain = styled.main`
     outline: none;
     border: none;
     border-radius: 5px;
-    color: black;
+    color: white;
     font-size: 1rem;
     transition: 0.15s;
   }
@@ -76,18 +67,17 @@ export default function Home(match) {
   return (
     <HomeMain>
       <div class="card">
-        <span class="card-title">
-        <img style={{width: "40px", position: "absolute", left: "25px"}}src={substLogoRed} />Today</span>
-        <span class="card-subtitle">Current doses</span>
+        <span class="card-title">Today</span>
+        <span class="card-subtitle">Today's doses</span>
         <DoseCardDisplay></DoseCardDisplay>
         <Link to="add_dose">
-          <HapticComponent><button style={{color: "white", width: "75px"}}><img src={addBoxIcon} width="100%" height="100%"/>Dose</button></HapticComponent>
+          <HapticComponent><button>Add Dose</button></HapticComponent>
         </Link>
       </div>
 
       <div class="card">
         <span class="card-title">Your Progress</span>
-        <DrugChart></DrugChart> 
+        <DrugChart></DrugChart>
       </div>
     </HomeMain>
   );

@@ -14,11 +14,6 @@ main {
     font-size: 1.4rem;
 }
 
-.card-subtitle {
-    font-size: 0.8rem;
-    color: #6c757d;
-}
-
 button /* Specify the type of button here? */ {
     background-color: black;
     padding: 8px 13px 8px 13px;

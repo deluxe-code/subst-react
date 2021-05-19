@@ -28,19 +28,18 @@ export default function AddDosePage(match) {
   return (
     <div>
         <div style={{position: "fixed", display: "flex", flexDirection: "column", alignContent: "center"}}>
-            <h1 style={{paddingLeft: "50px", marginBottom:"0px"}}>Add</h1>
+            <h1 style={{paddingLeft: "50px", marginBottom:"0px", color: "white"}}>Add</h1>
             <h2 style={{paddingLeft: "50px"}}>Dose</h2>
             <img src={doseIcon} height="400vw" style={{position:"absolute", top:"150px"}}/>
         </div>
-        <MultiStepForm onSubmit={submitDose}>
-            <FormDrugSelect onChange={(value)=>{drugId = value}}></FormDrugSelect>
+        <MultiStepForm onSubmit={()=>{submitDose(); console.log(drugId)}}>
+            <FormDrugSelect onChange={(value)=>{drugId = value; console.log("new" + drugId)} }></FormDrugSelect>
             <FormDoseAmount onChange={(value)=>{amount = value}}></FormDoseAmount>
             <FormTimeSelect onChange={(value)=>{time = value}}></FormTimeSelect>
         </MultiStepForm>
     </div>
   );
   function submitDose() {
-    window.location.pathname = '/'
     Doses.Store(Doses.FormatDose(drugId, amount, -1, new Date(time).getTime()));
   }
 }

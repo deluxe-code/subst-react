@@ -19,19 +19,21 @@ export default function AddButton(props) {
     styled.div`
       overflow: hidden;
       height: 100px;
-      width: 100%;
+      width: 100vw;
       bottom: 70px;
       display: flex;
+      justify-content: space-around;
       position: absolute;
       background-color: black;
     `:styled.div`
-      overflow: hidden;
-      height: 0px;
-      width: 100%;
-      bottom: 70px;
-      display: flex;
-      position: absolute;
-      background-color: black;
+        overflow: hidden;
+        height: 0px;
+        width: 100vw;
+        bottom: 70px;
+        display: flex;
+        justify-content: space-around;
+        position: absolute;
+        background-color: black;
     `;
     
     const Option = styled(NavLink)`

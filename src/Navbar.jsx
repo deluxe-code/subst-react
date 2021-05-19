@@ -15,15 +15,15 @@ import styled from "styled-components";
 const Nav = styled.nav`
   position: fixed;
   bottom: 0;
-  width: 100%;
   height: 70px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-direction: row;
   background-color: black;
+  width: 100vw;
 `;
 
 export const NavLink = styled(Link)`
-  width: 100%;
   text-decoration: none;
   height: 70px;
   display: flex;
