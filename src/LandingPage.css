@@ -8,8 +8,10 @@ html, body {
    align-items: center;
 }
 #root {
+   /*
    display: flex;
    justify-content: center;
+   */
 }
 main#LandingContent {
    display: flex;

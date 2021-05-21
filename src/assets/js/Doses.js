@@ -30,11 +30,11 @@ export class Doses extends DatabaseStorage{
     static GenerateNewId() {
         return super.GenerateNewId('doses');
     }
-    static FormatDose(drugID, doseAmount, doseType, scheduleId, dateTimeTakenMilis, experience="") {
-        if(drugID<0||doseAmount<0||doseType<0) {
+    static FormatDose(drugID, doseAmount, scheduleId, dateTimeTakenMilis, experience="") {
+        if(drugID<0||doseAmount<0) {
             console.error("Failed to format dose. All necessary parameters must be positive.")
         } else{
-            return super.FormatObject(this.GenerateNewId(),{drugID:drugID, doseAmount:doseAmount, doseType:doseType, scheduleId:scheduleId, dateTimeTakenMilis:dateTimeTakenMilis, experience:experience});
+            return super.FormatObject(this.GenerateNewId(),{drugID:drugID, doseAmount:doseAmount, scheduleId:scheduleId, dateTimeTakenMilis:dateTimeTakenMilis, experience:experience});
         }
         
     }

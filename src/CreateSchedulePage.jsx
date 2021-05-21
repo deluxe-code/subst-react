@@ -70,7 +70,6 @@ export default function AddDosePage(match) {
       <MultiStepForm onSubmit={submitSchedule}>
           <FormDrugSelect onChange={(value)=>{drugId = value}}></FormDrugSelect>
           <FormDateRange onChange={(value)=>{startDate = value.startDate; endDate = value.endDate; daysOfWeek = value.daysOfWeek}}></FormDateRange>
-          <FormUnitSelect onChange={(value)=>{unitId = value}}></FormUnitSelect>
           <FormTimeSelect onChange={(value)=>{time = value}}></FormTimeSelect>
       </MultiStepForm>
     </div>

@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from "react";
 import { Link, useHistory } from 'react-router-dom';
 import {DayOfWeekSelector} from "./assets/react_components/DayOfWeekSelector.jsx"
 import {SearchSelect, UnitSelect, DrugSelect} from './assets/js/SearchSelect.js';
+import {HapticComponent} from "./assets/react_components/HapticComponent.jsx";
 import styled from 'styled-components';
 export function MultiStepForm(props) {
     let pages = props.children.length==null?[props.children]:props.children;
@@ -35,7 +36,7 @@ export function MultiStepForm(props) {
         display: flex;
         flexDirection: row;
         position: fixed;
-        bottom: 100px;
+        top: 42vh;
         width: 200vw;
         transform: translateX(-100vw);
         animation: swipeLeft 0.5s;
@@ -58,8 +59,8 @@ export function MultiStepForm(props) {
         <CurrentFormPageWrapper>
             {currentPage}
             {currentPageIndex>=pages.length-1?
-                <button type="submit" onClick={props.onSubmit}>Submit</button>:
-                <button type="button" onClick={()=>{loadNextPage()}}>next</button>
+                <HapticComponent><button type="submit" onClick={props.onSubmit}>Submit</button></HapticComponent>:
+                <HapticComponent><button type="button" onClick={()=>{loadNextPage()}}>next</button></HapticComponent>
             }
         </CurrentFormPageWrapper>
 
@@ -98,7 +99,7 @@ export function FormTimeSelect(props) {
     return(
         <div>
             <label>Time</label>
-            <input type="datetime-local" className="form-control" id="time" onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
+            <input type="datetime-local" className="form-control" id="time" defaultValue={new Date().toISOString().substr(0,10)}onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
         </div>
     );
 }

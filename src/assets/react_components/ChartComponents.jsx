@@ -8,6 +8,7 @@ import {Units} from '../../assets/js/Units.js';
 import {SearchSelect, UnitSelect, DrugSelect} from '../../assets/js/SearchSelect.js';
 import { Doses } from "../../assets/js/Doses";
 import { Schedules } from "../../assets/js/Schedules";
+import styled from "styled-components";
 export function DrugChart(match) {
     const [drugId, setDrugId] = useState(0);
     const drugSelectRef = useRef();
@@ -18,8 +19,10 @@ export function DrugChart(match) {
             line: {
                 borderColor: 'white'
             }
-        }
+        },
     }
+    const StyledLine = styled(Line)`
+    `;
     let updateData = (option)=>{
         if(Doses.GetDosesCategorizedByDrug().get(option.optionId)!=null) {
             let doseList = Doses.GetDosesCategorizedByDrug().get(option.optionId).sort(function(a, b){return a.dateTimeTakenMilis-b.dateTimeTakenMilis});
@@ -40,7 +43,7 @@ export function DrugChart(match) {
     function ChartContainer(props) {
         if(Doses.GetDosesCategorizedByDrug().get(drugId)!=null) {
 
-            return <Line data={data} options={options}></Line>;
+            return <StyledLine data={data} options={options}></StyledLine>;
         } else {
             return <p className="error">No data for this drug.</p>;
         }

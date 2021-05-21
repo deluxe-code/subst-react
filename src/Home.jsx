@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase";
 import styled from "styled-components";
-// import "./Home.css";
-import { AppContext } from "./App";
-
+//import "./Home.css";
+import { AppContext } from "./App"
+import {HapticComponent} from "./assets/react_components/HapticComponent.jsx"
 import { DrugChart } from "./assets/react_components/ChartComponents.jsx";
 
 import { DoseCardDisplay } from "./assets/react_components/DoseCard.jsx";
@@ -70,9 +70,9 @@ export default function Home(match) {
         <span class="card-title">Today</span>
         <span class="card-subtitle">Today's doses</span>
         <DoseCardDisplay></DoseCardDisplay>
-        <a href="add_dose">
-          <button>Add Dose</button>
-        </a>
+        <Link to="add_dose">
+          <HapticComponent><button>Add Dose</button></HapticComponent>
+        </Link>
       </div>
 
       <div class="card">

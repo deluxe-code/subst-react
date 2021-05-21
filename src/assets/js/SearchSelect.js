@@ -28,10 +28,10 @@ export default function FunctionalSearchSelect(props) {
                 let lowerCaseList = props.list.map(value=>value.title.toLowerCase());
                 setInputValue(searchInput);
                 if(lowerCaseList.includes(inputValue.toLowerCase())||inputValue=="") {
-                    setAddButton(<button type="button" onClick={()=>{props.addClickFunction(searchInput)}}> Add {searchInput} to list</button>);
+                    setAddButton(<div></div>);
                 } else {
 
-                    setAddButton(<div></div>);
+                    setAddButton(<button type="button" onClick={()=>{props.addClickFunction(searchInput)}}> Add {searchInput} to list</button>);
             }}} 
             onOpen={()=>{
                 setOpened(true)
@@ -44,7 +44,7 @@ export default function FunctionalSearchSelect(props) {
         ></TwoStepSearchInput>
         <div id="options" className={"search-select-option-container " + (opened?"opened":"closed")} onClick={()=>{setOpened(false)}}>
         {
-            props.list.filter(optionNameIncludes).map(option => <button className={selectedId==option.optionId ? "search-select-option checked" : "search-select-option unchecked"} type="button" onClick={()=>{changeSelected(option);}}>{option.title}</button>)
+            props.list.filter(optionNameIncludes).map(option => <button className={selectedId==option.optionId ? "search-select-option checked" : "search-select-option unchecked"} type="button" onClick={()=>{changeSelected(option);}}><h2>{option.title}</h2><p>{(props.subtextFunction!=null?props.subtextFunction(option):"") + ""}</p></button>)
         }
         {addButton}
         </div>
@@ -100,7 +100,7 @@ export class DrugSelect extends Component {
     }
 
     render() {
-        return <FunctionalSearchSelect onChange={this.props.onChange} hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Drugs.Store(Drugs.FormatDrug(inputValue))}}></FunctionalSearchSelect>
+        return <FunctionalSearchSelect onChange={this.props.onChange} hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Drugs.Store(Drugs.FormatDrug(inputValue))}} subtextFunction={(drug)=>{ return (Units.GetElementWithId(Drugs.FindDrugWithID(drug.optionId).unitId)||{unitName:""}).unitName}}></FunctionalSearchSelect>
     }
     GetSelectedId() {
         return this.state.searchSelect.current.GetSelectedId();

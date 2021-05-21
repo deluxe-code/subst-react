@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { Link, useHistory } from "react-router-dom"
 import emailIcon from "./assets/email.svg"
 import lockIcon from "./assets/lock.svg"
-import "./Login.css"
+//import "./Login.css"
 import firebaseApp from "firebase";
 
 export default function Login() {

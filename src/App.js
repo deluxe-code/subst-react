@@ -12,6 +12,7 @@ import Settings from "./Settings.jsx";
 import AuthPage from "./Authentication.jsx";
 import StatisticsPage from "./StatisticsPage.jsx";
 import LandingPage from "./LandingPage.jsx";
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import "./App.css";
 
 export const AppContext = React.createContext();
@@ -44,17 +45,25 @@ export default function App() {
     <Router>
       {isAuthorized ? (
         <>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/account" component={Account} />
-            <Route path="/drug_info/:id" component={DrugInfo} />
-            <Route path="/schedule_info/:id" component={ScheduleInfo} />
-            <Route path="/add_dose" component={AddDosePage} />
-            <Route path="/create_schedule" component={CreateSchedule} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/statistics_page" component={StatisticsPage} />
-            <Route path="/about" component={LandingPage} />
-          </Switch>
+          <Route render={({location}) => (
+            <TransitionGroup>
+              <CSSTransition
+                key={location.key}
+                timeout={350}
+                classNames="fade">
+                <Switch location={location}>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/account" component={Account} />
+                  <Route path="/drug_info/:id" component={DrugInfo} />
+                  <Route path="/schedule_info/:id" component={ScheduleInfo} />
+                  <Route path="/add_dose" component={AddDosePage} />
+                  <Route path="/create_schedule" component={CreateSchedule} />
+                  <Route path="/settings" component={Settings} />
+                  <Route path="/statistics_page" component={StatisticsPage} />
+                </Switch>
+              </CSSTransition>
+            </TransitionGroup>
+          )}/>
           <Navbar />
         </>
       ) : 

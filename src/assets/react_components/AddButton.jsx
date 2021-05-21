@@ -7,15 +7,16 @@ import addBoxIcon from "../img/add_box_white_24dp.svg";
 import scheduleIcon from "../img/edit_calendar_white_24dp.svg";
 import doseIcon from "../img/medication_white_24dp.svg";
 
-export default function AddButton() {
+export default function AddButton(props) {
   let addBtn = useRef();
   let optionsBlock = useRef();
   let [menuOpened, setMenuOpened] = useContext(NavbarContext);
   useEffect(() => {
   }, [menuOpened]);
 
-  function AddMenu() {
-    const OptionList = styled.div`
+  function AddMenu(props) {
+    const OptionList = props.opened?
+    styled.div`
       overflow: hidden;
       height: 100px;
       width: 100%;
@@ -23,9 +24,16 @@ export default function AddButton() {
       display: flex;
       position: absolute;
       background-color: black;
-      animation: revealAddMenu 0.35s;
+    `:styled.div`
+      overflow: hidden;
+      height: 0px;
+      width: 100%;
+      bottom: 70px;
+      display: flex;
+      position: absolute;
+      background-color: black;
     `;
-
+    
     const Option = styled(NavLink)`
       height: 100%;
       display: flex;
@@ -45,7 +53,8 @@ export default function AddButton() {
       console.log("initialized, or just opened");
     });
     return (
-      <OptionList ref={optionsBlock}>
+      <OptionList onBlur={()=>{setMenuOpened(false)}} onClick={()=>{setMenuOpened(false)}} ref={optionsBlock} style={{
+        animation: menuOpened?"revealAddMenu 0.35s":"closeAddMenu 0.35s"}}>
         <Option to="/create_schedule">
           <img src={scheduleIcon} />
           <span>Create Schedule</span>
@@ -59,9 +68,9 @@ export default function AddButton() {
   }
   return (
     <>
-      {menuOpened ? <AddMenu /> : null}
-      <div className="nav-item" style={{display: 'flex', justifyContent: 'center'}}>
-        <button ref={addBtn} style={{background: 'black'}} onClick={() => setMenuOpened(!menuOpened)}>
+      {menuOpened ? <AddMenu opened={true}/> : <AddMenu opened={false}/> }
+      <div className="nav-item">
+        <button ref={addBtn} onClick={() => setMenuOpened(!menuOpened)}>
           <img src={addBoxIcon} className="add-box-icon nav-icon" />
         </button>
       </div>
