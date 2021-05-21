@@ -6,22 +6,28 @@ import React, { useState, useRef, useEffect } from "react"
 
 export default function FunctionalSearchSelect(props) {
     const [inputValue, setInputValue] = useState("");
-    const [selectedId, setSelectedId] = useState(0);
+    const [selectedId, setSelectedId] = useState(1);
     const [opened, setOpened] = useState(0);
     const [selectedOption, setSelectedOption] = useState(0);
     const [addButton, setAddButton] = useState(props.hasAddButton ? <button onClick={()=>{props.addClickFunction(inputValue)}}></button> : <div></div>);
+    const searchSelectRef = useRef();
+    useEffect(()=>{
+        //set default selected
+        changeSelected(props.list[0]);
+    }, []);
     let changeSelected = (option)=> {
         setSelectedId(option.optionId); 
         setSelectedOption(option);
-        props.onChange(option);
+
+        console.log(selectedId)
+        if(props.onChange!=null)props.onChange(option);
     }
     let optionNameIncludes = (option)=> {
         let title = option.title || "";
         return title.toLowerCase().includes(inputValue.toLowerCase())
     }
     return(
-    <div className="search-select" onClick={()=>{window.navigator.vibrate(5)}} 
- >
+    <div className="search-select" onClick={()=>{window.navigator.vibrate(5)}} ref={searchSelectRef}>
         <TwoStepSearchInput type="text" 
             onInput={(evt)=>{
                 let searchInput = evt.target.value;
@@ -34,13 +40,14 @@ export default function FunctionalSearchSelect(props) {
                     setAddButton(<button type="button" onClick={()=>{props.addClickFunction(searchInput)}}> Add {searchInput} to list</button>);
             }}} 
             onOpen={()=>{
-                setOpened(true)
+                setOpened(true);
             }}
             value={inputValue} 
-            placeholder={selectedOption==null?"Select Option":selectedOption.title}
-            title={selectedOption==null?"Select Option":selectedOption.title} 
+            placeholder={selectedOption.title}
+            title={selectedOption.title} 
             setOpened={setOpened}
             opened={opened}
+            defaultTitle={props.defaultTitle==null?"Select an option":props.defaultTitle}
         ></TwoStepSearchInput>
         <div id="options" className={"search-select-option-container " + (opened?"opened":"closed")} onClick={()=>{setOpened(false)}}>
         {
@@ -53,19 +60,21 @@ export default function FunctionalSearchSelect(props) {
 
 function TwoStepSearchInput(props) {
     const [opened, setOpened] = useState(props.opened);
-    const [title, setTitle] = useState(props.title);
+    const [title, setTitle] = useState(props.defaultTitle);
     const [currValue, setCurrValue] = useState(props.value);
     useEffect(()=>{
         setOpened(props.opened);
         setTitle(props.title);
         setCurrValue(props.value);
     });
-    let textBox = opened?
-    (<input {...props} value={currValue} ></input>):
-    (<button 
-        style={{backgroundColor:"white", color: "black", textAlign:"left"}} 
-        onClick={()=>{props.onOpen()}}
-    >{title}</button>);
+    let textBox = 
+    <>
+        <input {...props} value={currValue} style={{display: opened?"block":"none"}}></input>  
+        <button 
+            style={{backgroundColor:"white", color: "black", textAlign:"left", display: opened?"none":"block"}} 
+            onClick={()=>{props.onOpen();}}
+        >{title||props.defaultTitle}</button>
+    </>;
     return(textBox);
 }
 export class FormattedOption {
@@ -100,7 +109,7 @@ export class DrugSelect extends Component {
     }
 
     render() {
-        return <FunctionalSearchSelect onChange={this.props.onChange} hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Drugs.Store(Drugs.FormatDrug(inputValue))}} subtextFunction={(drug)=>{ return (Units.GetElementWithId(Drugs.FindDrugWithID(drug.optionId).unitId)||{unitName:""}).unitName}}></FunctionalSearchSelect>
+        return <FunctionalSearchSelect defaultTitle="Select a drug" onChange={this.props.onChange} hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Drugs.Store(Drugs.FormatDrug(inputValue))}} subtextFunction={(drug)=>{ return (Units.GetElementWithId(Drugs.FindDrugWithID(drug.optionId).unitId)||{unitName:""}).unitName}}></FunctionalSearchSelect>
     }
     GetSelectedId() {
         return this.state.searchSelect.current.GetSelectedId();

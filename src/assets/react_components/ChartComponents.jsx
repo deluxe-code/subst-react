@@ -51,10 +51,10 @@ export function DrugChart(match) {
 
 
   return (
-    <div>
-        <DrugSelect ref={drugSelectRef} onChange={(option)=>{setDrugId(option.optionId); updateData(option)}}>
+    <>
+        <DrugSelect ref={drugSelectRef} onChange={(option)=>{setDrugId(option.optionId); updateData(option)}} style={{width:"100%"}}>
         </DrugSelect>
         <ChartContainer></ChartContainer>
-    </div>
+    </>
   );
 }

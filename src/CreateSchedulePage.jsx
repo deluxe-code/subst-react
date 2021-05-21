@@ -63,7 +63,7 @@ export default function AddDosePage(match) {
   return (    
     <div>
       <div style={{position: "fixed", display: "flex", flexDirection: "column", alignContent: "center"}}>
-          <h1 style={{paddingLeft: "50px", marginBottom:"0px"}}>Create</h1>
+          <h1 style={{paddingLeft: "50px", marginBottom:"0px", color: "white"}}>Create</h1>
           <h2 style={{paddingLeft: "50px"}}>Schedule</h2>
           <img src={scheduleIcon} height="400vw" style={{position:"absolute", top:"150px"}}/>
       </div>

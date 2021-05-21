@@ -1,12 +1,12 @@
 
 'use strict';
-import React, { createRef } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import {Drugs} from  '../js/Drugs.js';
 import {Schedules} from '../js/Schedules.js'
 import {Units} from '../js/Units.js'
 import {Doses} from '../js/Doses.js';
-import img from '../img/schedule_white_24dp.svg';
+import img from '../img/schedule_black_24dp.svg';
 import { EditText, EditTextarea } from 'react-edit-text';
 export class DoseCardDisplay extends React.Component {
     state = {
@@ -45,16 +45,18 @@ class DoseCard extends React.Component {
         this.state.takenTextColor = this.props.dose.dateTimeTakenMilis<0 ? "white" : "grey";
         return <div className={"schedule-card"}>
             <button id="body" className="dose-card-body" onClick={this.onClick}>
-                <img id="icon" src={img} className="schedule-card-icon"></img>
-                <h1 id="drugName" className="schedule-card-title"> {Drugs.FindDrugWithID(this.props.dose.drugID).drugName}</h1>
-                <h1 id="timeDisplay" className="schedule-card-time" style={{color:this.state.takenTextColor}}>&nbsp; -  {this.props.dose.dateTimeTakenMilis<0 ? this.getFormatedTime(Schedules.FindScheduleWithId(this.props.dose.scheduleId).time) : "Took at - " + this.getFormatedTime(this.props.dose.dateTimeTakenMilis) + ""}</h1>
+                <div style={{display:"flex", alignItems: "center"}}>
+                    <img id="icon" src={img} className="schedule-card-icon"></img>
+                    <h1 id="drugName" className="schedule-card-title">
+                        {Drugs.FindDrugWithID(this.props.dose.drugID).drugName}
+                    </h1>
+                </div>
+                <h1 id="timeDisplay" className="schedule-card-time" style={{color:this.state.takenTextColor}}>
+                    <ElapsedTimeText dateTimeTakenMilis={this.props.dose.dateTimeTakenMilis}></ElapsedTimeText>
+                </h1>
             </button>
             <DoseCardDropdown className={this.state.isOpened?"dose-card-dropdown opened":"dose-card-dropdown closed"} dose={this.props.dose} refreshDisplay={this.props.refreshDisplay}></DoseCardDropdown>
         </div>
-    }
-    getFormatedTime(timeMilis) {
-        let date = new Date(timeMilis);
-        return date.toLocaleTimeString('en-US').split(':')[0]+ ":" + date.toLocaleTimeString('en-US').split(':')[1];
     }
 
 }
@@ -68,7 +70,7 @@ class DoseCardDropdown extends React.Component {
         super(props);
     }
     render() {
-        let drugInfoLink = `drug_info/${this.props.dose.drugID}`;
+        let drugInfoLink = `/drug_info/${this.props.dose.drugID}`;
         let scheduleInfoLink = `schedule_info/${this.props.dose.scheduleId}`;
         if(!Doses.HasTaken(this.props.dose.id)) {
             this.state.currentBody = 
@@ -82,44 +84,45 @@ class DoseCardDropdown extends React.Component {
             </div>;
         } else {
             this.state.currentBody = 
-                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                    <Link to={drugInfoLink}>
-                        <button type="button"><p className="highlighted">{Drugs.FindDrugWithID(this.props.dose.drugID).drugName}</p> Info</button>
-                    </Link>
+                <div style={{display: "flex", flexDirection: "row", alignItems: "center", flexWrap: "wrap", justifyContent: "center"}}>
+                    <div className="dose-card-section-card">
+                        <Link to={drugInfoLink}>
+                            <button type="button" style={{backgroundColor: "#EF4D4D", color: "white",  width: "100%", borderRadius: "20px"}}><p className="highlighted" style={{color: "black"}}>{Drugs.FindDrugWithID(this.props.dose.drugID).drugName}</p> Info</button>
+                        </Link>
+                    </div>
                     <div className="dose-card-section-card">
                         <h1>You took <p className="highlighted">{this.props.dose.doseAmount}</p> {Units.GetElementWithId(Drugs.FindDrugWithID(this.props.dose.drugID).unitId).unitName}</h1>
                     </div>
                     <div className="dose-card-section-card">
-                        <h1>Time Elapsed: <p className="highlighted">{this.state.time}</p></h1>
+                        <TimeTakenDisplay {...this.props}></TimeTakenDisplay>
                     </div>
                     <div className="dose-card-section-card">
                         <EditTextarea className="edit-text-area" placeholder={this.props.dose.experience==''?'Add a description' : this.props.dose.experience} onSave={(evt)=>{Doses.SetExperience(evt.value, this.props.dose.id)}}/>
                         <h2 style={{textAlign: "right"}}> - User4389</h2>
                     </div>
-                    <button onClick={()=>{Doses.RemoveDose(this.props.dose.id); this.setState({removed: true});this.props.refreshDisplay(Doses.GetTodaysDoses());}}>remove</button>
+                    <button style={{color: "white"}}onClick={()=>{Doses.RemoveDose(this.props.dose.id); this.setState({removed: true});this.props.refreshDisplay(Doses.GetTodaysDoses());}}>remove</button>
                 </div>
         }
         return(
             <div className={this.props.className}>{this.state.currentBody}</div>
         );
     }
+}
 
-    componentDidMount() {
-        this.setTimerValue();
-        this.myInterval = setInterval(() => {
-            this.setTimerValue();
+function ElapsedTimeText(props) {
+    const [time, setTime] = useState(0);
+    useEffect(()=>{
+        setTimerValue();
+        const timeInterval = setInterval(() => {
+            setTimerValue();
         }, 1000)
-    }
-    setTimerValue() {
+    })
+    function setTimerValue() {
         let currentTimeMilis = new Date().getTime();
-        let timeDiff = currentTimeMilis - this.props.dose.dateTimeTakenMilis;
-        this.setState({time:this.formatTime(timeDiff)});
+        let timeDiff = currentTimeMilis - props.dateTimeTakenMilis;
+        setTime(formatTime(timeDiff));
     }
-
-    componentWillUnmount() {
-        clearInterval(this.myInterval)
-    }
-    formatTime(time) {
+    function formatTime(time) {
         let dateObj = new Date(time);
         let hours = dateObj.getUTCHours();
         let minutes = dateObj.getUTCMinutes();
@@ -129,4 +132,16 @@ class DoseCardDropdown extends React.Component {
             seconds.toString().padStart(2, '0');
         return timeString;
     }
+    return(
+       <h1 style={{fontSize: "1.2em"}}>{time} elapsed</h1>
+    );
+}
+
+function TimeTakenDisplay(props) {
+    
+    function getFormatedTime(timeMilis) {
+        let date = new Date(timeMilis);
+        return date.toLocaleTimeString('en-US').split(':')[0]+ ":" + date.toLocaleTimeString('en-US').split(':')[1];
+    }
+    return <h1>{props.dose.dateTimeTakenMilis<0 ? "Scheduled for " + getFormatedTime(Schedules.FindScheduleWithId(props.dose.scheduleId).time) : "Took at "} <p className="highlighted">{getFormatedTime(props.dose.dateTimeTakenMilis)}</p></h1>
 }

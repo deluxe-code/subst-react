@@ -13,6 +13,9 @@ export function MultiStepForm(props) {
         setCurrentPageIndex(currentPageIndex+1);
         console.log(currentPage);
     };
+    let loadPreviousPage = ()=>{
+        setCurrentPageIndex(currentPageIndex-1);
+    };
     const CurrentFormPageWrapper = styled.div`
         background-color: rgb(39, 39, 39);
         padding: 20px;
@@ -49,18 +52,20 @@ export function MultiStepForm(props) {
     return(
     <MultiStepFormWrapper style={currentPageIndex==0?{animation: "swipeLeft 0s", transform: "translateX(-100vw)"}:{}}>
         <PreviousFormPageWrapper>
-            {previousPage}
-            {currentPageIndex>=pages.length-1?
-                <button type="submit" onClick={props.onSubmit}>Submit</button>:
-                <button type="button" onClick={()=>{loadNextPage()}}>next</button>
-            }
+            {/*currentPageIndex>=pages.length-1?
+                <button type="submit" style={{backgroundColor: "white", color: "black"}} onClick={props.onSubmit}>Submit</button>:
+                <button type="button" style={{backgroundColor: "white", color: "black"}} onClick={()=>{loadNextPage()}}>next</button>
+            */}
         </PreviousFormPageWrapper>
 
         <CurrentFormPageWrapper>
             {currentPage}
             {currentPageIndex>=pages.length-1?
-                <HapticComponent><button type="submit" onClick={props.onSubmit}>Submit</button></HapticComponent>:
-                <HapticComponent><button type="button" onClick={()=>{loadNextPage()}}>next</button></HapticComponent>
+                <HapticComponent><button type="submit" style={{backgroundColor: "black", color: "white"}} onClick={props.onSubmit}>Submit</button></HapticComponent>:
+                <HapticComponent>
+                    <button type="button" style={{backgroundColor: "black", color: "white"}} onClick={()=>{loadPreviousPage()}}>Previous</button>
+                    <button type="button" style={{backgroundColor: "black", color: "white"}} onClick={()=>{loadNextPage()}}>Next</button>
+                </HapticComponent>
             }
         </CurrentFormPageWrapper>
 
@@ -99,11 +104,14 @@ export function FormTimeSelect(props) {
     return(
         <div>
             <label>Time</label>
-            <input type="datetime-local" className="form-control" id="time" defaultValue={new Date().toISOString().substr(0,10)}onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
+            <input type="datetime-local" className="form-control" id="time" value={getCurrentDateString()}defaultValue={new Date().toISOString().substr(0,10)}onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
         </div>
     );
 }
-
+function getCurrentDateString() {
+    return new Date().getFullYear().toString() + '-' + (new Date().getMonth() + 1).toString().padStart(2, 0) +
+    '-' + new Date().getDate().toString().padStart(2, 0) + "T" + new Date().toLocaleTimeString('it-IT')
+}
 export function FormDateRange(props) {
     let startDate = -1;
     let endDate = -1;
