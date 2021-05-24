@@ -18,6 +18,24 @@ import { AppContext } from "./App";
 const Main = styled.main`
   background-color: black;
   color: white;
+  button {
+    background-color: black;
+    padding: 8px 13px 8px 13px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    transition: 0.15s;
+  }
+  button:hover {
+    background-color: #0069d9;
+  }
+
+  button:hover,
+  a:hover {
+    cursor: pointer;
+  }
 `;
 const SettingsContent = styled.div`
 
