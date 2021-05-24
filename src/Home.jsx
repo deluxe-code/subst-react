@@ -11,6 +11,9 @@ import { DrugChart } from "./assets/react_components/ChartComponents.jsx";
 import addBoxIcon from "./assets/img/add_box_white_24dp.svg";
 import { DoseCardDisplay } from "./assets/react_components/DoseCard.jsx";
 import substLogoRed from "./assets/img/SPill.svg"
+import { ScheduleSelect } from "./assets/js/SearchSelect.js"
+import {Schedules} from "./assets/js/Schedules.js"
+import { Doses } from "./assets/js/Doses";
 // import { AddOrb } from "./assets/react_components/AddOrb";
 
 const HomeMain = styled.main`
@@ -45,7 +48,6 @@ const HomeMain = styled.main`
     outline: none;
     border: none;
     border-radius: 5px;
-    color: black;
     font-size: 1rem;
     transition: 0.15s;
   }
@@ -79,10 +81,13 @@ export default function Home(match) {
         <span class="card-title">
         <img style={{width: "40px", position: "absolute", left: "25px"}}src={substLogoRed} />Today</span>
         <span class="card-subtitle">Current doses</span>
-        <DoseCardDisplay></DoseCardDisplay>
+        <DoseCardDisplay doses={Doses.GetTodaysTakenDoses()}></DoseCardDisplay>
         <Link to="add_dose">
           <HapticComponent><button style={{color: "white", width: "75px"}}><img src={addBoxIcon} width="100%" height="100%"/>Dose</button></HapticComponent>
         </Link>
+        <span class="card-subtitle">Upcoming doses</span>
+        <DoseCardDisplay doses={Doses.GetTodaysUpcomingDoses()}></DoseCardDisplay>
+        
       </div>
 
       <div class="card">

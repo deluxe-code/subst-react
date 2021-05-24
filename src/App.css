@@ -74,14 +74,6 @@ input, button {
     color: white;
 }
 
-.dose-cards-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 98%;
-    margin-left: 30px;
-}
-
 .search-select-option-container {
     display: flex;
     flex-direction: column;

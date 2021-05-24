@@ -3,6 +3,9 @@ import { Component } from 'react';
 import {Drugs} from './Drugs.js'
 import {Units} from './Units.js'
 import React, { useState, useRef, useEffect } from "react"
+import { Schedules } from './Schedules.js';
+
+import styled from "styled-components";
 
 export default function FunctionalSearchSelect(props) {
     const [inputValue, setInputValue] = useState("");
@@ -47,7 +50,6 @@ export default function FunctionalSearchSelect(props) {
             title={selectedOption.title} 
             setOpened={setOpened}
             opened={opened}
-            defaultTitle={props.defaultTitle==null?"Select an option":props.defaultTitle}
         ></TwoStepSearchInput>
         <div id="options" className={"search-select-option-container " + (opened?"opened":"closed")} onClick={()=>{setOpened(false)}}>
         {
@@ -62,19 +64,23 @@ function TwoStepSearchInput(props) {
     const [opened, setOpened] = useState(props.opened);
     const [title, setTitle] = useState(props.defaultTitle);
     const [currValue, setCurrValue] = useState(props.value);
+    const StyledInput = styled.div`
+        border-radius: 100px;
+        background-color: white;
+    `;
     useEffect(()=>{
         setOpened(props.opened);
         setTitle(props.title);
         setCurrValue(props.value);
     });
     let textBox = 
-    <>
-        <input {...props} value={currValue} style={{display: opened?"block":"none"}}></input>  
+    <StyledInput>
+        <input {...props} value={currValue} style={{display: opened?"block":"none", width: "100%", backgroundColor: "transparent"}}></input>  
         <button 
-            style={{backgroundColor:"white", color: "black", textAlign:"left", display: opened?"none":"block"}} 
+            style={{backgroundColor:"transparent", color: "black", textAlign:"left", display: opened?"none":"block", width: "100%"}} 
             onClick={()=>{props.onOpen();}}
         >{title||props.defaultTitle}</button>
-    </>;
+    </StyledInput>;
     return(textBox);
 }
 export class FormattedOption {
@@ -109,7 +115,7 @@ export class DrugSelect extends Component {
     }
 
     render() {
-        return <FunctionalSearchSelect defaultTitle="Select a drug" onChange={this.props.onChange} hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Drugs.Store(Drugs.FormatDrug(inputValue))}} subtextFunction={(drug)=>{ return (Units.GetElementWithId(Drugs.FindDrugWithID(drug.optionId).unitId)||{unitName:""}).unitName}}></FunctionalSearchSelect>
+        return <FunctionalSearchSelect onChange={this.props.onChange} hasAddButton={true} ref={this.state.searchSelect} list={this.state.list} addClickFunction={function(inputValue){Drugs.Store(Drugs.FormatDrug(inputValue))}} subtextFunction={(drug)=>{ return (Units.GetElementWithId(Drugs.FindDrugWithID(drug.optionId).unitId)||{unitName:""}).unitName}}></FunctionalSearchSelect>
     }
     GetSelectedId() {
         return this.state.searchSelect.current.GetSelectedId();
@@ -148,3 +154,15 @@ export class UnitSelect extends Component{
     }
 }
 
+export function ScheduleSelect(props) {
+    return(
+    <FunctionalSearchSelect
+        defaultTitle="Select a schedule" 
+        onChange={props.onChange} 
+        hasAddButton={false} 
+        list={Schedules.GetSchedules().map(schedule=>new FormattedOption(schedule.id, Drugs.FindDrugWithID(schedule.drugID).drugName)).concat(new FormattedOption(-1, "No schedules"))} 
+        addClickFunction={()=>{}} 
+        subtextFunction={(option)=>{return ("" + (Schedules.FindScheduleWithId(option.optionId)==null?"nothing":Schedules.FindScheduleWithId(option.optionId).startDate) +  " through "+ (Schedules.FindScheduleWithId(option.optionId)==null?"nothing":Schedules.FindScheduleWithId(option.optionId).endDate)) }}
+
+     ></FunctionalSearchSelect>);
+}

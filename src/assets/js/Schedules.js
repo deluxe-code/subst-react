@@ -25,7 +25,7 @@ export class Schedules extends DatabaseStorage{
         let i = 0;
         schedules.forEach(schedule=> {
             if(this.ScheduleIncludesToday(schedule)&&!this.TodaysDoseForScheduleExists(schedule.id)) {
-                Doses.Store(Doses.FormatDose(schedule.drugID, this.CalculateDoseAmount(schedule), schedule.doseType, schedule.id, -1));
+                Doses.Store(Doses.FormatDose(schedule.drugID, 1, schedule.id, schedule.dateTimeTakenMilis, "test"));
             }
             i++;
         });
@@ -93,12 +93,14 @@ export class Schedules extends DatabaseStorage{
         let schedules = this.GetSchedules();
         let schedule = this.FindScheduleWithId(scheduleId);
         let result = false;
-        
-        doses.forEach(dose=>{
-            if(this.ScheduleIncludesToday(schedule) && dose.scheduleId == scheduleId) {
-                result = true;
-            }
-        });
+        if(doses[0]==null||!this.ScheduleIncludesToday(schedule)) {
+        } else {
+            doses.forEach(dose=>{
+                if(dose.scheduleId == scheduleId) {
+                    result = true;
+                }
+            });
+        }
         return result;
     }
     static FindScheduleWithId(id) {
@@ -110,4 +112,5 @@ export class Schedules extends DatabaseStorage{
         schedule.description = description;
         super.ChangeData('schedules', id, schedule);
     }
+
 }

@@ -4,7 +4,7 @@ import './DrugInfo.css';
 import {DoseCardDisplay} from './assets/react_components/DoseCard.jsx';
 import {Units} from './assets/js/Units.js';
 import {SearchSelect, UnitSelect, DrugSelect} from './assets/js/SearchSelect.js';
-import {MultiStepForm, FormDateRange, FormDrugSelect, FormUnitSelect, FormDoseAmount, FormTimeSelect} from "./MultiStepForm.jsx"
+import {MultiStepForm, FormDateRange, FormDrugSelect, FormDoseRange, FormUnitSelect, FormDoseAmount, FormTimeSelect} from "./MultiStepForm.jsx"
 
 import scheduleIcon from './assets//img/edit_calendar_white_24dp.svg';
 import { Doses } from "./assets/js/Doses";
@@ -57,7 +57,7 @@ export default function AddDosePage(match) {
   */
   function submitSchedule() {
     //DayOfWeekSelect
-    Schedules.Store(Schedules.FormatSchedule(drugId, startDose, endDose, unitId, startDate, endDate, new Date(time).getTime(), (Array.isArray(daysOfWeek)?daysOfWeek:[daysOfWeek]).map(day=>day.Value), -1));
+    Schedules.Store(Schedules.FormatSchedule(drugId, startDose, endDose, unitId, startDate, endDate, time, (Array.isArray(daysOfWeek)?daysOfWeek:[daysOfWeek]).map(day=>day.Value), -1));
   }
 
   return (    
@@ -69,8 +69,9 @@ export default function AddDosePage(match) {
       </div>
       <MultiStepForm onSubmit={submitSchedule}>
           <FormDrugSelect onChange={(value)=>{drugId = value}}></FormDrugSelect>
+          <FormDoseRange onChange={(rangeObject)=>{startDose=rangeObject[0]; endDose=rangeObject[1]}}></FormDoseRange>
           <FormDateRange onChange={(value)=>{startDate = value.startDate; endDate = value.endDate; daysOfWeek = value.daysOfWeek}}></FormDateRange>
-          <FormTimeSelect onChange={(value)=>{time = value}}></FormTimeSelect>
+          <FormTimeSelect onChange={(value)=>{time = new Date(value).toLocaleTimeString()}}></FormTimeSelect>
       </MultiStepForm>
     </div>
   );

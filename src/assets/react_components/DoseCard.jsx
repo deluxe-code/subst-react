@@ -1,6 +1,6 @@
 
 'use strict';
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useContext, useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import {Drugs} from  '../js/Drugs.js';
 import {Schedules} from '../js/Schedules.js'
@@ -8,60 +8,69 @@ import {Units} from '../js/Units.js'
 import {Doses} from '../js/Doses.js';
 import img from '../img/schedule_black_24dp.svg';
 import { EditText, EditTextarea } from 'react-edit-text';
-export class DoseCardDisplay extends React.Component {
-    state = {
-        doses: Doses.GetTodaysDoses()
-    };
-    constructor(props){
-        super(props);
-        if(this.props.doses!=null) {
-            this.state.doses = this.props.doses;
-        }
-    }
-    render() {  
-      return <div className="dose-cards-section">{this.state.doses.map(dose=><DoseCard key={dose.id} dose={dose} refreshDisplay={(p)=>{this.setState({doses:p})}}></DoseCard>)}</div>;
+import styled from 'styled-components'
+/*
 
-    }
+.schedule-card-time {
+    font-size: 1em;
+    margin: 0px;
+    text-align: center;
 }
 
-class DoseCard extends React.Component {
-    state = {
-        transitionSpeed: "0.1s",
-        isOpened: false
-    };
-    constructor(props) {
-        super(props);
-        this.onClick = this.onClick.bind(this);
-      }
-    
-      onClick() {
-          this.setState({isOpened: !this.state.isOpened});
-          window.navigator.vibrate(10);
+.schedule-card-title {
+    font-size: 1.5rem;
+    text-align: center;
+}
+*/
+
+export function DoseCardDisplay(props) {
+    const [doses, setDoses] = useState(props.doses||Doses.GetTodaysDoses());
+    const StyledDoseCardDisplay = styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 98%;
+        margin-left: 30px;
+    `;
+    return <StyledDoseCardDisplay>{doses.map(dose=><DoseCard key={dose.id} dose={dose} refreshDisplay={(value)=>{setDoses(value)}}></DoseCard>)}</StyledDoseCardDisplay>;
+}
+
+export function DoseCard(props) {
+    const [isOpened, setIsOpened] = useState(false);
+    const [takenTextColor, setTakenTextColor] = useState("white");
+    let transitionSpeed = "0.1s";
+    function onClick() {
+        setIsOpened(!isOpened);
         //this.state.isOpened = !this.state.isOpened;
     }
-    
-    render() {
-        //Drugs.FindDrugWithID(this.props.dose.drugID).drugName
-        this.state.takenTextColor = this.props.dose.dateTimeTakenMilis<0 ? "white" : "grey";
-        return <div className={"schedule-card"}>
-            <button id="body" className="dose-card-body" onClick={this.onClick}>
-                <div style={{display:"flex", alignItems: "center"}}>
-                    <img id="icon" src={img} className="schedule-card-icon"></img>
-                    <h1 id="drugName" className="schedule-card-title">
-                        {Drugs.FindDrugWithID(this.props.dose.drugID).drugName}
-                    </h1>
-                </div>
-                <h1 id="timeDisplay" className="schedule-card-time" style={{color:this.state.takenTextColor}}>
-                    <ElapsedTimeText dateTimeTakenMilis={this.props.dose.dateTimeTakenMilis}></ElapsedTimeText>
+    useEffect(()=>{
+        setTakenTextColor(props.dose.dateTimeTakenMilis<0 ? "white" : "grey");
+    })
+    return <div className={"schedule-card"}>
+        <button id="body" className="dose-card-body" onClick={onClick}>
+            <div style={{display:"flex", alignItems: "center"}}>
+                <img id="icon" src={img} className="schedule-card-icon"></img>
+                <h1 id="drugName" className="schedule-card-title">
+                    {Drugs.FindDrugWithID(props.dose.drugID).drugName}
                 </h1>
-            </button>
-            <DoseCardDropdown className={this.state.isOpened?"dose-card-dropdown opened":"dose-card-dropdown closed"} dose={this.props.dose} refreshDisplay={this.props.refreshDisplay}></DoseCardDropdown>
-        </div>
-    }
+            </div>
+            <h1 id="timeDisplay" className="schedule-card-time" style={{color:takenTextColor}}>
+                    {props.dose.dateTimeTakenMilis>0?<ElapsedTimeText dateTimeTakenMilis={props.dose.dateTimeTakenMilis}></ElapsedTimeText>:Schedules.FindScheduleWithId(props.dose.scheduleId).time }
+            </h1>
+        </button>
+        <DoseCardDropdown className={isOpened?"dose-card-dropdown opened":"dose-card-dropdown closed"} dose={props.dose} refreshDisplay={props.refreshDisplay}></DoseCardDropdown>
+    </div>
 
 }
 
+const StyledDropdown = styled.div`
+    color: "white";
+    button { 
+        color: white;
+    }
+`;
 class DoseCardDropdown extends React.Component {
+    
     state = {
         removed: false,
         experienceRef: createRef()
@@ -74,14 +83,15 @@ class DoseCardDropdown extends React.Component {
         let scheduleInfoLink = `schedule_info/${this.props.dose.scheduleId}`;
         if(!Doses.HasTaken(this.props.dose.id)) {
             this.state.currentBody = 
-            <div>
+            <StyledDropdown>
                 <button id="schedule-card-take-button" 
                     onClick={()=>{
-                        Doses.SetTimer(new Date().getTime(), this.props.dose.id); this.props.refreshDisplay(Doses.GetTodaysDoses());
+                        console.log(this.props.dose)
+                        OpenAmountDialog();
                     }}
                 >Take Dose</button>
                 <Link to={scheduleInfoLink}><button type="button">Schedule info</button></Link>
-            </div>;
+            </StyledDropdown>;
         } else {
             this.state.currentBody = 
                 <div style={{display: "flex", flexDirection: "row", alignItems: "center", flexWrap: "wrap", justifyContent: "center"}}>
@@ -107,6 +117,15 @@ class DoseCardDropdown extends React.Component {
             <div className={this.props.className}>{this.state.currentBody}</div>
         );
     }
+}
+
+function OpenAmountDialog(props) {
+    const StyledBox = styled.div`
+        position: static;
+        left: 50%;
+    `;
+    Doses.SetTimer(new Date().getTime(), this.props.dose.id); 
+    return <StyledBox></StyledBox>
 }
 
 function ElapsedTimeText(props) {

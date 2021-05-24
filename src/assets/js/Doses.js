@@ -20,12 +20,17 @@ export class Doses extends DatabaseStorage{
         let todaysDoses = [];
         let i = 0;
         doses.forEach(dose=> {
-            if(IsToday(new Date(dose.dateTimeTakenMilis))||(dose.scheduleId!=-1&&Schedules.ScheduleIncludesToday(Schedules.FindScheduleWithId(dose.scheduleId)))||dose.scheduleId==-1) {
+            if(IsToday(new Date(dose.dateTimeTakenMilis))||(dose.scheduleId!=-1&&Schedules.ScheduleIncludesToday(Schedules.FindScheduleWithId(dose.scheduleId)))) {
                 todaysDoses.push(dose);
             }
             i++;
         });
         return todaysDoses;
+    }
+
+    static GetTodaysTakenDoses() {
+        console.log(this.GetTodaysDoses().filter(dose=>dose.dateTimeTakenMilis>0));
+        return this.GetTodaysDoses().filter(dose=>dose.dateTimeTakenMilis>0);
     }
     static GenerateNewId() {
         return super.GenerateNewId('doses');
@@ -44,6 +49,7 @@ export class Doses extends DatabaseStorage{
         super.ChangeData('doses', id, replacement);
     }
     static SetTimer(dateTimeTakenMilis, id) {
+        console.log(this.GetElementWithId(id));
         let replacement = this.GetElementWithId(id);
         replacement.dateTimeTakenMilis = dateTimeTakenMilis;
         super.ChangeData('doses', id, replacement);
@@ -75,5 +81,10 @@ export class Doses extends DatabaseStorage{
             currentDoseCategory.sort((a, b) => (a.dateTimeTakenMilis > b.dateTimeTakenMilis) ? 1 : -1);
         });
         return doseMap;
+    }
+    static GetTodaysUpcomingDoses() {
+        let doses = Doses.GetTodaysDoses();
+        let upcoming = doses.filter(dose=>dose.dateTimeTakenMilis<0);
+        return upcoming;
     }
 }

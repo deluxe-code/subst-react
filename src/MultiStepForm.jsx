@@ -81,7 +81,18 @@ export function FormDrugSelect(props) {
         </div>
     );
 }
-
+export function FormDoseRange(props) {
+    const [startDose, setStartDose] = useState(0);
+    const [endDose, setEndDose] = useState(0);
+    return <>
+    
+        <label className="d-flex justify-content-center">Current Amount</label>
+        <input className="form-control" type="number" id="dose-start" onInput={(evt)=>{setStartDose(evt.target.value);props.onChange([startDose, endDose])}}></input>
+        
+        <label className="d-flex justify-content-center">Goal Amount</label>
+        <input className="form-control" type="number" id="dose-end" onInput={(evt)=>{setEndDose(evt.target.value);props.onChange([startDose, endDose])}}></input>
+    </>
+}
 export function FormUnitSelect(props) {
     return (
         <div>
@@ -101,10 +112,14 @@ export function FormDoseAmount(props) {
 }
 
 export function FormTimeSelect(props) {
+    let currentValue = getCurrentDateString();
+    useEffect(()=>{
+        props.onChange(currentValue);
+    },[]);
     return(
         <div>
             <label>Time</label>
-            <input type="datetime-local" className="form-control" id="time" value={getCurrentDateString()}defaultValue={new Date().toISOString().substr(0,10)}onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
+            <input type="datetime-local" className="form-control" id="time" defaultValue={currentValue} onInput={(evt)=>{props.onChange(evt.target.value)}}></input>
         </div>
     );
 }
