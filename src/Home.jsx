@@ -62,18 +62,17 @@ const HomeMain = styled.main`
 `;
 
 export default function Home(match) {
-  let [userEmail, setEmail] = useState("");
-  let isAuthorized = useContext(AppContext);
-  useEffect(
-    function () {
-      if (isAuthorized) {
-        setEmail(firebase.auth().currentUser.email);
-      } else {
-        setEmail("");
-      }
-    },
-    [isAuthorized]
-  );
+  let {isAuthorized, email} = useContext(AppContext);
+  // useEffect(
+  //   function () {
+  //     if (isAuthorized) {
+  //       setEmail(firebase.auth().currentUser.email);
+  //     } else {
+  //       setEmail("");
+  //     }
+  //   },
+  //   [isAuthorized]
+  // );
 
   return (
     <HomeMain>

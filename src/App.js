@@ -1,5 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams,
+  useHistory,
+} from "react-router-dom";
 import firebase from "./Firebase.js";
 import Navbar from "./Navbar.jsx";
 import Home from "./Home.jsx";
@@ -12,15 +18,17 @@ import Settings from "./Settings.jsx";
 import AuthPage from "./Authentication.jsx";
 import StatisticsPage from "./StatisticsPage.jsx";
 import LandingPage from "./LandingPage.jsx";
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./App.css";
 
 export const AppContext = React.createContext();
 
 export default function App() {
   let [isAuthorized, setAuthorized] = useState(null);
-  let [firebaseInitialized, setFirebaseInitialized] = useState(false);
   let [email, setEmail] = useState(null);
+
+  const history = useHistory();
+
   useEffect(
     function () {
       if (isAuthorized) {
@@ -37,40 +45,47 @@ export default function App() {
     // } else {
     //   setAuthorized(false);
     // }
-    setAuthorized((user ? true : false));
+    if (!user) {
+      console.log("Time to reveal AuthPage");
+    }
+    setAuthorized(user ? true : false);
   });
 
   return (
     <AppContext.Provider value={[isAuthorized, email]}>
-    <Router>
-      {isAuthorized ? (
+      <Router>
         <>
-          <Route render={({location}) => (
-            <TransitionGroup>
-              <CSSTransition
-                key={location.key}
-                timeout={350}
-                classNames="fade">
-                <Switch location={location}>
-                  <Route path="/" exact component={Home} />
-                  <Route path="/account" component={Account} />
-                  <Route path="/drug_info/:id" component={DrugInfo} />
-                  <Route path="/schedule_info/:id" component={ScheduleInfo} />
-                  <Route path="/add_dose" component={AddDosePage} />
-                  <Route path="/create_schedule" component={CreateSchedule} />
-                  <Route path="/settings" component={Settings} />
-                  <Route path="/statistics_page" component={StatisticsPage} />
-                </Switch>
-              </CSSTransition>
-            </TransitionGroup>
-          )}/>
+          <Route
+            render={({ location }) => (
+              <TransitionGroup>
+                <CSSTransition
+                  key={location.key}
+                  timeout={350}
+                  classNames="fade"
+                >
+                  <Switch location={location}>
+                    <Route path="/" exact component={Home} />
+                    <Route path="/about" component={LandingPage} />
+                    <Route path="/account" component={Account} />
+                    <Route path="/drug_info/:id" component={DrugInfo} />
+                    <Route path="/schedule_info/:id" component={ScheduleInfo} />
+                    <Route path="/add_dose" component={AddDosePage} />
+                    <Route path="/create_schedule" component={CreateSchedule} />
+                    <Route path="/settings" component={Settings} />
+                    <Route path="/statistics_page" component={StatisticsPage} />
+                    <Route path="/login" component={AuthPage} />
+                  </Switch>
+                </CSSTransition>
+              </TransitionGroup>
+            )}
+          />
           <Navbar />
         </>
-      ) : 
-      <AuthPage/>}
+        {/* <AuthPage/> */}
+
         {/* Insert a loading sequence component here? and if firebase onAuthStateChanged runs 
         and is still false, only then show Login page / Landing page? */}
-    </Router>
+      </Router>
     </AppContext.Provider>
   );
 }

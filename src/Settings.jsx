@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useParams, Link } from "react-router-dom";
 import firebase from "firebase";
 import arrow_back from "./assets/img/arrow_back-24px.svg";
 import smilecheems from "./assets/img/smilecheems.png";
@@ -57,11 +57,13 @@ export default function Settings() {
 
   return (
     <Main>
-        {isAuthorized && (
+        {isAuthorized ? (
           <>
             <span style={{ color: "white" }}>{userEmail}</span>
             <button onClick={() => firebase.auth().signOut()}>Sign out</button>
           </>
+        ) : (
+          <Link to="/login">Login</Link>
         )}
       <header>
         <img src={arrow_back} alt="back" />

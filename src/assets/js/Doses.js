@@ -29,7 +29,7 @@ export class Doses extends DatabaseStorage{
     }
 
     static GetTodaysTakenDoses() {
-        console.log(this.GetTodaysDoses().filter(dose=>dose.dateTimeTakenMilis>0));
+        // console.log(this.GetTodaysDoses().filter(dose=>dose.dateTimeTakenMilis>0));
         return this.GetTodaysDoses().filter(dose=>dose.dateTimeTakenMilis>0);
     }
     static GenerateNewId() {
